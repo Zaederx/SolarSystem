@@ -1,6 +1,7 @@
 package solarsystem;
 
 
+
 import java.awt.BorderLayout;
 import java.awt.Container;
 
@@ -24,9 +25,9 @@ public class SolarSystem extends JFrame {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+
 	
-	public void setup () {
+	public SolarSystem () {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		Container container = getContentPane();
 		BorderLayout bL = new BorderLayout();
