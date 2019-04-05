@@ -5,12 +5,16 @@ package solarsystem;
 import java.awt.BorderLayout;
 import java.awt.Container;
 
+import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
+import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.swing.JFrame;
+import javax.vecmath.Color3f;
+import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
@@ -18,6 +22,7 @@ import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
+import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.ColorCube;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
@@ -69,8 +74,24 @@ public class SolarSystem extends JFrame {
 		Transform3D t1 = new Transform3D();
 		
 		t1.setTranslation(new Vector3d(0.0,0.0,-5));
+		t1.setScale(new Vector3d(2.0,2.0,2.0));
+		//matrix for translation t1
+		Matrix4d matrix = new Matrix4d();
+		t1.get(matrix);
+		
 		TransformGroup cubeTG = new TransformGroup(t1);
 		
+		
+		
+		//create appearance for box
+		Appearance greenApp = new Appearance();
+		Color3f greenColor = new Color3f(0.0f, 1.0f,0.0f);
+		ColoringAttributes greenCA = new ColoringAttributes();
+		greenCA.setColor(greenColor);
+		greenApp.setColoringAttributes(greenCA);
+		
+		//Create box and add the appearance
+		Box box = new Box(0.8f,0.8f,.1f, greenApp);
 		
 		
 		//create 3D shapes
@@ -83,7 +104,9 @@ public class SolarSystem extends JFrame {
 		objRoot.addChild(mainTG);
 		mainTG.addChild(cubeTG);
 		cubeTG.addChild(colorCube);
+		mainTG.addChild(box);
 		mainTG.addChild(colorCube2);
+		
 		
 		//Create rotation behaviour
 		MouseRotate behaviourRot = new MouseRotate();
