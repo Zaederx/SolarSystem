@@ -12,6 +12,7 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.swing.JFrame;
 import javax.vecmath.Point3d;
+import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
@@ -21,10 +22,6 @@ import com.sun.j3d.utils.geometry.ColorCube;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 public class SolarSystem extends JFrame {
-
-	/**
-	 * 
-	 */
 
 	
 	public SolarSystem () {
@@ -67,12 +64,26 @@ public class SolarSystem extends JFrame {
 		mainTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		mainTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		
-		//create 3D shape
-		ColorCube colorCube = new ColorCube();
+		
+		//another transform and transform group
+		Transform3D t1 = new Transform3D();
+		
+		t1.setTranslation(new Vector3d(0.0,0.0,-5));
+		TransformGroup cubeTG = new TransformGroup(t1);
+		
+		
+		
+		//create 3D shapes
+		ColorCube colorCube = new ColorCube(.5);
+		
+		ColorCube colorCube2 = new ColorCube(.5);
 		
 		//make edge relations with the scene graph nodes
+		//cube 1 translated -5 along z axis
 		objRoot.addChild(mainTG);
-		mainTG.addChild(colorCube);
+		mainTG.addChild(cubeTG);
+		cubeTG.addChild(colorCube);
+		mainTG.addChild(colorCube2);
 		
 		//Create rotation behaviour
 		MouseRotate behaviourRot = new MouseRotate();
