@@ -67,9 +67,9 @@ public class SolarSystem extends JFrame {
 		BranchGroup objRoot = new BranchGroup();
 		
 		//transform group for the branch group
-		TransformGroup mainTG = new TransformGroup();
-		mainTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		mainTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		TransformGroup sunTG = new TransformGroup();
+		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		
 		
 		//another transform and transform group
@@ -116,29 +116,29 @@ public class SolarSystem extends JFrame {
 		
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
-		objRoot.addChild(mainTG);
-		mainTG.addChild(cubeTG);
+		objRoot.addChild(sunTG);
+		sunTG.addChild(cubeTG);
 		cubeTG.addChild(mercury);
 		cubeTG.addChild(planetaryRing);
-		mainTG.addChild(sun);
+		sunTG.addChild(sun);
 		
 		
 		//Create rotation behaviour
 		MouseRotate behaviourRot = new MouseRotate();
-		behaviourRot.setTransformGroup(mainTG);
+		behaviourRot.setTransformGroup(sunTG);
 		objRoot.addChild(behaviourRot);
 		behaviourRot.setSchedulingBounds(bounds);
 		
 		
 		//MouseRotate behaviour node
 		MouseZoom behaviourZoom = new MouseZoom();
-		behaviourZoom.setTransformGroup(mainTG);
+		behaviourZoom.setTransformGroup(sunTG);
 		objRoot.addChild(behaviourZoom);
 		behaviourZoom.setSchedulingBounds(bounds);
 		
 		//Translate Behaviour
 		MouseTranslate behaviourTrans = new MouseTranslate();
-		behaviourTrans.setTransformGroup(mainTG);
+		behaviourTrans.setTransformGroup(sunTG);
 		objRoot.addChild(behaviourTrans);
 		behaviourTrans.setSchedulingBounds(bounds);
 		
