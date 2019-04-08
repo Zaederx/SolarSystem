@@ -155,13 +155,14 @@ public class SolarSystem extends JFrame {
 		venusT.setTranslation(new Vector3d(0.0,0.0,-5));
 		venusT.setScale(new Vector3d(2.0,2.0,2.0));
 		TransformGroup venusTG = new TransformGroup(venusT);
-		Sphere venus = new Sphere(0.5f);
-		Appearance venusApp = new Appearance();
-		Color3f venusColor = new Color3f(1f,.7f,.5f);
-		ColoringAttributes venusCA = new ColoringAttributes();
-		venusCA.setColor(venusColor);
-		venus.setAppearance(venusApp);
+//		Sphere venus = new Sphere(0.5f);
+//		Appearance venusApp = new Appearance();
+//		Color3f venusColor = new Color3f(1f,.7f,.5f);
+//		ColoringAttributes venusCA = new ColoringAttributes();
+//		venusCA.setColor(venusColor);
+//		venus.setAppearance(venusApp);
 		
+		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
@@ -197,6 +198,18 @@ public class SolarSystem extends JFrame {
 		return objRoot;
 	}
 	
+	public Sphere celestialBody(float sphereSize, float red, float green, float blue) {
+		Sphere celestialBody = new Sphere(sphereSize);
+		Appearance appearance = new Appearance();
+		Color3f color = new Color3f(red,green,blue);
+		ColoringAttributes cAttributes = new ColoringAttributes();
+		cAttributes.setColor(color);
+		appearance.setColoringAttributes(cAttributes);
+		
+		celestialBody.setAppearance(appearance);
+		
+		return celestialBody;
+	}
 	
 	public static void main (String [] args) {
 		SolarSystem  solarSystem = new SolarSystem();
