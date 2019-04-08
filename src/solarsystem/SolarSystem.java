@@ -5,6 +5,8 @@ package solarsystem;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Appearance;
@@ -146,11 +148,53 @@ public class SolarSystem extends JFrame {
 		
 		
 		
-		Sphere mercury = celestialBody(.5f, 1f, 0f, 0f);
+		Sphere mercury = null;
+		try {
+			mercury = (Sphere)celestialBody(Sphere.class, .5f, 1f, 0f, 0f);
+		} catch (NoSuchMethodException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SecurityException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InstantiationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalAccessException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IllegalArgumentException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvocationTargetException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		TransformGroup venusTG = createTG(0.0, 0.0, -5, 2.0, 2.0, 2.0);
 
-		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
+		Sphere venus = null;
+		try {
+			venus = (Sphere)celestialBody(Sphere.class, 0.5f, 1f, .7f, .5f);
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		
 		//make edge relations with the scene graph nodes
@@ -188,16 +232,16 @@ public class SolarSystem extends JFrame {
 		return objRoot;
 	}
 	
-	public Object celestialBody(Object clazz, float sphereSize, float red, float green, float blue) {
-		Class<?> c;
+	public Object celestialBody(Object clazz, float sphereSize, float red, float green, float blue) throws NoSuchMethodException, SecurityException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		Class<?> c = null;
 		
 		try {
 			c = Class.forName(clazz.getClass().getName());
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-		Constructor<?> constructor = c.getConstructor(float.class);
-		
+		Constructor<?> constructor = c.getConstructor(Float.class);
+		Method m = c.getDeclaredMethod("setAppearance", Appearance.class);
 //		Object celestialBody = c.newInstance();
 		Object celestialBody = constructor.newInstance(sphereSize);
 		Appearance appearance = new Appearance();
@@ -205,7 +249,7 @@ public class SolarSystem extends JFrame {
 		ColoringAttributes cAttributes = new ColoringAttributes();
 		cAttributes.setColor(color);
 		appearance.setColoringAttributes(cAttributes);
-		celestialBody.setAppearance(appearance);
+		celestialBody.getClass().getMethod("setAppearance", Appearance.class).invoke(appearance);
 		
 		return celestialBody;
 	}
