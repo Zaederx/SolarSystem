@@ -24,6 +24,7 @@ import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 public class SolarSystem extends JFrame {
@@ -95,7 +96,13 @@ public class SolarSystem extends JFrame {
 		
 		
 		//create 3D shapes
-		ColorCube colorCube = new ColorCube(.5);
+		Sphere sun = new Sphere((float) .5);
+		Appearance sunApp = new Appearance();
+		Color3f sunColor = new Color3f( 1f, 1f, 0f);
+		ColoringAttributes sunCA = new ColoringAttributes();
+		sunCA.setColor(sunColor);
+		sunApp.setColoringAttributes(sunCA);
+		sun.setAppearance(sunApp);
 		
 		ColorCube colorCube2 = new ColorCube(.5);
 		
@@ -103,7 +110,7 @@ public class SolarSystem extends JFrame {
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(mainTG);
 		mainTG.addChild(cubeTG);
-		cubeTG.addChild(colorCube);
+		cubeTG.addChild(sun);
 		mainTG.addChild(box);
 		mainTG.addChild(colorCube2);
 		
