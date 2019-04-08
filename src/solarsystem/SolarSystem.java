@@ -94,8 +94,8 @@ public class SolarSystem extends JFrame {
 		bgLight.addChild(light2);
 		
 		su.addBranchGraph(bgLight);
-		
 	}
+	
 	public BranchGroup createSceneGraph () {
 		//creates the bound of the universe
 		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0), 10.0);
@@ -151,13 +151,27 @@ public class SolarSystem extends JFrame {
 		Sphere mercury = new Sphere(.5f);
 		mercury.setAppearance(mercuryApp);
 		
+		Transform3D venusT = new Transform3D();
+		venusT.setTranslation(new Vector3d(0.0,0.0,-5));
+		venusT.setScale(new Vector3d(2.0,2.0,2.0));
+		TransformGroup venusTG = new TransformGroup(venusT);
+		Sphere venus = new Sphere(0.5f);
+		Appearance venusApp = new Appearance();
+		Color3f venusColor = new Color3f(1f,.7f,.5f);
+		ColoringAttributes venusCA = new ColoringAttributes();
+		venusCA.setColor(venusColor);
+		venus.setAppearance(venusApp);
+		
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
+		sunTG.addChild(sun);
 		sunTG.addChild(mercuryTG);
 		mercuryTG.addChild(mercury);
 		mercuryTG.addChild(planetaryRing);
-		sunTG.addChild(sun);
+		mercuryTG.addChild(venusTG);
+		venusTG.addChild(venus);
+		
 		
 		
 		//Create rotation behaviour
