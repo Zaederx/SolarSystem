@@ -24,6 +24,7 @@ import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
@@ -92,7 +93,7 @@ public class SolarSystem extends JFrame {
 		greenApp.setColoringAttributes(greenCA);
 		
 		//Create box and add the appearance
-		Box box = new Box(0.8f,0.8f,.1f, greenApp);
+		Cylinder box = new Cylinder(0.8f,0.1f, greenApp);
 		
 		
 		//create 3D shapes
