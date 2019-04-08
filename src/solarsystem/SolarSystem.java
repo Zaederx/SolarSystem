@@ -110,9 +110,9 @@ public class SolarSystem extends JFrame {
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(mainTG);
 		mainTG.addChild(cubeTG);
-		cubeTG.addChild(sun);
+		cubeTG.addChild(colorCube2);
 		mainTG.addChild(box);
-		mainTG.addChild(colorCube2);
+		mainTG.addChild(sun);
 		
 		
 		//Create rotation behaviour
