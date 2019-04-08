@@ -81,7 +81,7 @@ public class SolarSystem extends JFrame {
 		Matrix4d matrix = new Matrix4d();
 		t1.get(matrix);
 		
-		TransformGroup cubeTG = new TransformGroup(t1);
+		TransformGroup mercuryTG = new TransformGroup(t1);
 		
 		
 		
@@ -117,9 +117,9 @@ public class SolarSystem extends JFrame {
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
-		sunTG.addChild(cubeTG);
-		cubeTG.addChild(mercury);
-		cubeTG.addChild(planetaryRing);
+		sunTG.addChild(mercuryTG);
+		mercuryTG.addChild(mercury);
+		mercuryTG.addChild(planetaryRing);
 		sunTG.addChild(sun);
 		
 		
