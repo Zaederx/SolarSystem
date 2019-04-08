@@ -111,7 +111,7 @@ public class SolarSystem extends JFrame {
 		objRoot.addChild(mainTG);
 		mainTG.addChild(cubeTG);
 		cubeTG.addChild(colorCube2);
-		mainTG.addChild(box);
+		cubeTG.addChild(box);
 		mainTG.addChild(sun);
 		
 		
