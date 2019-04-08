@@ -93,11 +93,11 @@ public class SolarSystem extends JFrame {
 		greenApp.setColoringAttributes(greenCA);
 		
 		//Create box and add the appearance
-		Cylinder box = new Cylinder(0.8f,0.1f, greenApp);
+		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, greenApp);
 		
 		
-		//create 3D shapes
-		Sphere sun = new Sphere((float) .5);
+		//create 3D shapes and appearances
+		Sphere sun = new Sphere(.5f);
 		Appearance sunApp = new Appearance();
 		Color3f sunColor = new Color3f( 1f, 1f, 0f);
 		ColoringAttributes sunCA = new ColoringAttributes();
@@ -105,14 +105,21 @@ public class SolarSystem extends JFrame {
 		sunApp.setColoringAttributes(sunCA);
 		sun.setAppearance(sunApp);
 		
-		ColorCube colorCube2 = new ColorCube(.5);
+		
+		Appearance mercuryApp = new Appearance();
+		Color3f mercuryColor = new Color3f( 1f, 0f, 0f);
+		ColoringAttributes mercuryCA = new ColoringAttributes();
+		mercuryCA.setColor(mercuryColor);
+		mercuryApp.setColoringAttributes(mercuryCA);
+		Sphere mercury = new Sphere(.5f);
+		mercury.setAppearance(mercuryApp);
 		
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(mainTG);
 		mainTG.addChild(cubeTG);
-		cubeTG.addChild(colorCube2);
-		cubeTG.addChild(box);
+		cubeTG.addChild(mercury);
+		cubeTG.addChild(planetaryRing);
 		mainTG.addChild(sun);
 		
 		
