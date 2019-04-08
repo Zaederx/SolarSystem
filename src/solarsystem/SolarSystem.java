@@ -4,6 +4,7 @@ package solarsystem;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.lang.reflect.Constructor;
 
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Appearance;
@@ -64,7 +65,7 @@ public class SolarSystem extends JFrame {
 		T3D.setTranslation(translate);
 		cameraTG.setTransform(T3D);
 		addLight(simpUniv);
-		setTitle("Step 1: A simple cube");
+		setTitle("The Solar System");
 		setSize(700,700);
 		setVisible(true);
 	}
@@ -110,27 +111,28 @@ public class SolarSystem extends JFrame {
 		
 		
 		//another transform and transform group
-		Transform3D t1 = new Transform3D();
-		
-		t1.setTranslation(new Vector3d(0.0,0.0,-5));
-		t1.setScale(new Vector3d(2.0,2.0,2.0));
-		//matrix for translation t1
+//		Transform3D t1 = new Transform3D();
+//		
+//		t1.setTranslation(new Vector3d(0.0,0.0,-5));
+//		t1.setScale(new Vector3d(2.0,2.0,2.0));
+//		//matrix for translation t1
+//		Matrix4d matrix = new Matrix4d();
+//		t1.get(matrix);
+//		
+//		TransformGroup mercuryTG = new TransformGroup(t1);
+//		
 		Matrix4d matrix = new Matrix4d();
-		t1.get(matrix);
-		
-		TransformGroup mercuryTG = new TransformGroup(t1);
-		
-		
+		TransformGroup mercuryTG = createTG(0.0, 0.0, -5, 2.0, 2.0, 2.0, matrix);
 		
 		//create appearance for box
-		Appearance greenApp = new Appearance();
-		Color3f greenColor = new Color3f(0.0f, 1.0f,0.0f);
-		ColoringAttributes greenCA = new ColoringAttributes();
-		greenCA.setColor(greenColor);
-		greenApp.setColoringAttributes(greenCA);
+		Appearance planetaryRingApp = new Appearance();
+		Color3f pRColor = new Color3f(0.0f, 1.0f,0.0f);
+		ColoringAttributes pRColourAttribute = new ColoringAttributes();
+		pRColourAttribute.setColor(pRColor);
+		planetaryRingApp.setColoringAttributes(pRColourAttribute);
 		
 		//Create box and add the appearance
-		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, greenApp);
+		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, planetaryRingApp);
 		
 		
 		//create 3D shapes and appearances
@@ -143,26 +145,14 @@ public class SolarSystem extends JFrame {
 		sun.setAppearance(sunApp);
 		
 		
-		Appearance mercuryApp = new Appearance();
-		Color3f mercuryColor = new Color3f( 1f, 0f, 0f);
-		ColoringAttributes mercuryCA = new ColoringAttributes();
-		mercuryCA.setColor(mercuryColor);
-		mercuryApp.setColoringAttributes(mercuryCA);
-		Sphere mercury = new Sphere(.5f);
-		mercury.setAppearance(mercuryApp);
 		
-		Transform3D venusT = new Transform3D();
-		venusT.setTranslation(new Vector3d(0.0,0.0,-5));
-		venusT.setScale(new Vector3d(2.0,2.0,2.0));
-		TransformGroup venusTG = new TransformGroup(venusT);
-//		Sphere venus = new Sphere(0.5f);
-//		Appearance venusApp = new Appearance();
-//		Color3f venusColor = new Color3f(1f,.7f,.5f);
-//		ColoringAttributes venusCA = new ColoringAttributes();
-//		venusCA.setColor(venusColor);
-//		venus.setAppearance(venusApp);
+		Sphere mercury = celestialBody(.5f, 1f, 0f, 0f);
 		
+		TransformGroup venusTG = createTG(0.0, 0.0, -5, 2.0, 2.0, 2.0);
+
 		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
+		
+		
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
@@ -198,19 +188,48 @@ public class SolarSystem extends JFrame {
 		return objRoot;
 	}
 	
-	public Sphere celestialBody(float sphereSize, float red, float green, float blue) {
-		Sphere celestialBody = new Sphere(sphereSize);
+	public Object celestialBody(Object clazz, float sphereSize, float red, float green, float blue) {
+		Class<?> c;
+		
+		try {
+			c = Class.forName(clazz.getClass().getName());
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		Constructor<?> constructor = c.getConstructor(float.class);
+		
+//		Object celestialBody = c.newInstance();
+		Object celestialBody = constructor.newInstance(sphereSize);
 		Appearance appearance = new Appearance();
 		Color3f color = new Color3f(red,green,blue);
 		ColoringAttributes cAttributes = new ColoringAttributes();
 		cAttributes.setColor(color);
 		appearance.setColoringAttributes(cAttributes);
-		
 		celestialBody.setAppearance(appearance);
 		
 		return celestialBody;
 	}
 	
+	public TransformGroup createTG(double transX, double transY, double transZ, 
+									double scaleX, double scaleY, double scaleZ) {
+		Transform3D planetT = new Transform3D();
+		planetT.setTranslation(new Vector3d(transX, transY, transZ));
+		planetT.setScale(new Vector3d(scaleX,scaleY,scaleZ));
+		TransformGroup planetTG = new TransformGroup(planetT);
+		
+		return planetTG;
+	}
+	
+	public TransformGroup createTG( double transX, double transY, double transZ, 
+			double scaleX, double scaleY, double scaleZ, Matrix4d matrix) {
+		Transform3D planetT = new Transform3D();
+		planetT.setTranslation(new Vector3d(transX, transY, transZ));
+		planetT.setScale(new Vector3d(scaleX,scaleY,scaleZ));
+		planetT.get(matrix);
+		TransformGroup planetTG = new TransformGroup(planetT);
+		return planetTG;
+		
+	}
 	public static void main (String [] args) {
 		SolarSystem  solarSystem = new SolarSystem();
 	}
