@@ -137,12 +137,14 @@ public class SolarSystem extends JFrame {
 		//Create box and add the appearance
 		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, greenApp);
 		
-		
+		//*****Mercury
 		//matrix for translation t1
 		Matrix4d matrix = new Matrix4d();
 		Transform3D mercuryT = new Transform3D();
 		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT, matrix);
 		Sphere mercury = celestialBody(0.5f, 1f, 0f, 0f);
+		//***Mercury*** END
+		
 		
 		//**Venus***
 		Transform3D venusT = new Transform3D();
@@ -151,14 +153,16 @@ public class SolarSystem extends JFrame {
 		//**Venus *** END
 		
 		//*****Rotation*****
-		TransformGroup rotTG1 = new TransformGroup();
-		rotTG1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		Alpha rotAlpha1 = new Alpha(-1, 18000);
+		TransformGroup rotTG0 = new TransformGroup();
+		rotTG0.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		Alpha rotAlpha1 = new Alpha(1, 18000);
 		Transform3D yAxis = new Transform3D();
 		
 		//float variable controls how much of a rotation
-		RotationInterpolator rotator = new RotationInterpolator(rotAlpha1, rotTG1, yAxis, 0.0f, (float) Math.PI * (3.0f)/4);
-		rotator.setSchedulingBounds(bounds);	
+		RotationInterpolator rotator0 = new RotationInterpolator(rotAlpha1, rotTG0, yAxis, 0.0f, (float) Math.PI * (3.0f)/4);
+		rotator0.setSchedulingBounds(bounds);	
+		
+		
 		Transform3D t = new Transform3D();
 		t.setScale(new Vector3d(2.0,2.0,2.0));
 		t.setTranslation(new Vector3d(0.0,0.0,-5));
@@ -167,14 +171,14 @@ public class SolarSystem extends JFrame {
 		t.mul(helperT3D);
 		helperT3D.rotX(Math.PI/2);
 		t.mul(helperT3D);
+		TransformGroup rotTG1 = new TransformGroup(t);
 		//*****Rotation*** END
 		
 		//*****Rotation2*********
 		TransformGroup rotTG2 = new TransformGroup();
 		rotTG2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		Alpha rotAlpha2 = new Alpha(-1, 4000);
+		Alpha rotAlpha2 = new Alpha(1, 4000);
 		Transform3D yAxis2 = new Transform3D();
-		
 		RotationInterpolator rotator2 = new RotationInterpolator(rotAlpha2, rotTG2, yAxis2,0.0f, (float) Math.PI * 2.0f);
 		rotator2.setSchedulingBounds(bounds);
 		//****Rotation2******
@@ -183,21 +187,15 @@ public class SolarSystem extends JFrame {
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
-		sunTG.addChild(sun);//mainTG
-		sunTG.addChild(rotTG1);
-//		rotTG1.addChild(mercuryTG);//cubeTG0
-		rotTG1.addChild(rotator);
+		sunTG.addChild(rotTG0);
+		rotTG0.addChild(rotTG1);
 		rotTG1.addChild(rotTG2);
-		rotTG2.addChild(rotator2);
-		rotTG2.addChild(mercury);
-//		rotTG2.addChild(mercuryTG);
-//		sunTG.addChild(mercuryTG);
-//		sunTG.addChild(rotator);
-////		mercuryTG.addChild(mercury);//cubeTG1
-//		mercuryTG.addChild(planetaryRing);
-//		mercuryTG.addChild(venusTG);
-////		mercuryTG.addChild(rotator);
-//		venusTG.addChild(venus);//cubeTG2
+			rotTG2.addChild(mercury);
+			rotTG2.addChild(planetaryRing);
+			rotTG2.addChild(venus);
+			rotTG2.addChild(rotator2);
+			rotTG0.addChild(rotator0);
+		sunTG.addChild(sun);
 		
 		
 		//Create rotation behaviour
