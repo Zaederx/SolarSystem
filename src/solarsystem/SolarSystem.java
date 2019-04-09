@@ -5,6 +5,7 @@ package solarsystem;
 import java.awt.BorderLayout;
 import java.awt.Container;
 
+import javax.media.j3d.Alpha;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Appearance;
 import javax.media.j3d.BoundingSphere;
@@ -12,6 +13,7 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.swing.JFrame;
@@ -108,17 +110,8 @@ public class SolarSystem extends JFrame {
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		
-		
-		//another transform and transform group
-		Transform3D t1 = new Transform3D();
-		
-		t1.setTranslation(new Vector3d(0.0,0.0,-5));
-		t1.setScale(new Vector3d(2.0,2.0,2.0));
-		//matrix for translation t1
-		Matrix4d matrix = new Matrix4d();
-		t1.get(matrix);
-		
-		TransformGroup mercuryTG = new TransformGroup(t1);
+		//create 3D shapes and appearances
+		Sphere sun = celestialBody(.5f, 1f, 1f, 0f);
 		
 		
 		
@@ -129,50 +122,53 @@ public class SolarSystem extends JFrame {
 		greenCA.setColor(greenColor);
 		greenApp.setColoringAttributes(greenCA);
 		
+		
 		//Create box and add the appearance
 		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, greenApp);
 		
 		
-		//create 3D shapes and appearances
-		Sphere sun = new Sphere(.5f);
-		Appearance sunApp = new Appearance();
-		Color3f sunColor = new Color3f( 1f, 1f, 0f);
-		ColoringAttributes sunCA = new ColoringAttributes();
-		sunCA.setColor(sunColor);
-		sunApp.setColoringAttributes(sunCA);
-		sun.setAppearance(sunApp);
+		//matrix for translation t1
 		
+		Matrix4d matrix = new Matrix4d();
+		Transform3D mercuryT = new Transform3D();
+		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT, matrix);
+//		mercuryTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+//		mercuryTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		Sphere mercury = celestialBody(0.5f, 1f, 0f, 0f);
 		
-		Appearance mercuryApp = new Appearance();
-		Color3f mercuryColor = new Color3f( 1f, 0f, 0f);
-		ColoringAttributes mercuryCA = new ColoringAttributes();
-		mercuryCA.setColor(mercuryColor);
-		mercuryApp.setColoringAttributes(mercuryCA);
-		Sphere mercury = new Sphere(.5f);
-		mercury.setAppearance(mercuryApp);
+		TransformGroup rotTG0 = new TransformGroup();
+		rotTG0.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		Alpha rotationAlpha = new Alpha(1, 18000);
+		Transform3D yAxis = new Transform3D();
+		RotationInterpolator rotator = new RotationInterpolator(rotationAlpha, rotTG0, yAxis, 0.0f, (float) Math.PI * (1.0f/4));
+		rotator.setSchedulingBounds(bounds);
+		
+		Transform3D t = new Transform3D();
+		t.setScale(new Vector3d(2.0,2.0,2.0));
+		t.setTranslation(new Vector3d(0.0,0.0,-5));
+		Transform3D helperT3D = new Transform3D();
+		helperT3D.rotZ(Math.PI);
+		t.mul(helperT3D);
+		t.rotX(Math.PI/2);
+		t.mul(helperT3D);
 		
 		Transform3D venusT = new Transform3D();
-		venusT.setTranslation(new Vector3d(0.0,0.0,-5));
-		venusT.setScale(new Vector3d(2.0,2.0,2.0));
-		TransformGroup venusTG = new TransformGroup(venusT);
-//		Sphere venus = new Sphere(0.5f);
-//		Appearance venusApp = new Appearance();
-//		Color3f venusColor = new Color3f(1f,.7f,.5f);
-//		ColoringAttributes venusCA = new ColoringAttributes();
-//		venusCA.setColor(venusColor);
-//		venus.setAppearance(venusApp);
-		
+		TransformGroup venusTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0, venusT);
 		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
-		sunTG.addChild(sun);
-		sunTG.addChild(mercuryTG);
-		mercuryTG.addChild(mercury);
+		sunTG.addChild(sun);//mainTG
+		sunTG.addChild(rotTG0);
+		rotTG0.addChild(mercuryTG);//cubeTG0
+		rotTG0.addChild(rotator);
+//		sunTG.addChild(mercuryTG);
+//		sunTG.addChild(rotator);
+		mercuryTG.addChild(mercury);//cubeTG1
 		mercuryTG.addChild(planetaryRing);
 		mercuryTG.addChild(venusTG);
-		venusTG.addChild(venus);
-		
+//		mercuryTG.addChild(rotator);
+		venusTG.addChild(venus);//cubeTG2
 		
 		
 		//Create rotation behaviour
@@ -180,7 +176,6 @@ public class SolarSystem extends JFrame {
 		behaviourRot.setTransformGroup(sunTG);
 		objRoot.addChild(behaviourRot);
 		behaviourRot.setSchedulingBounds(bounds);
-		
 		
 		//MouseRotate behaviour node
 		MouseZoom behaviourZoom = new MouseZoom();
@@ -198,6 +193,26 @@ public class SolarSystem extends JFrame {
 		return objRoot;
 	}
 	
+	public TransformGroup createTG(double transX, double transY, double transZ,
+									double scaleX, double scaleY,double scaleZ, Transform3D planet) {
+		Transform3D planetT = new Transform3D();
+		planetT.setTranslation(new Vector3d(transX,transY, transZ));
+		planetT.setScale(new Vector3d(scaleX,scaleY,scaleZ));
+		TransformGroup planetTG = new TransformGroup(planetT);
+		
+		return planetTG;
+	}
+	
+	public TransformGroup createTG(double transX, double transY, double transZ,
+			double scaleX, double scaleY,double scaleZ,Transform3D planet, Matrix4d matrix) {
+			Transform3D planetT = new Transform3D();
+			planetT.setTranslation(new Vector3d(transX,transY, transZ));
+			planetT.setScale(new Vector3d(scaleX,scaleY,scaleZ));
+			planetT.get(matrix);
+			TransformGroup planetTG = new TransformGroup(planetT);
+
+			return planetTG;
+}
 	public Sphere celestialBody(float sphereSize, float red, float green, float blue) {
 		Sphere celestialBody = new Sphere(sphereSize);
 		Appearance appearance = new Appearance();
@@ -205,7 +220,6 @@ public class SolarSystem extends JFrame {
 		ColoringAttributes cAttributes = new ColoringAttributes();
 		cAttributes.setColor(color);
 		appearance.setColoringAttributes(cAttributes);
-		
 		celestialBody.setAppearance(appearance);
 		
 		return celestialBody;
