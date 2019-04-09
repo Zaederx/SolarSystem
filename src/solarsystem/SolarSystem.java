@@ -155,11 +155,11 @@ public class SolarSystem extends JFrame {
 		//*****Rotation*****
 		TransformGroup rotTG0 = new TransformGroup();
 		rotTG0.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		Alpha rotAlpha1 = new Alpha(1, 18000);
+		Alpha rotAlpha1 = new Alpha(-1, 18000);
 		Transform3D yAxis = new Transform3D();
 		
 		//float variable controls how much of a rotation
-		RotationInterpolator rotator0 = new RotationInterpolator(rotAlpha1, rotTG0, yAxis, 0.0f, (float) Math.PI * (3.0f)/4);
+		RotationInterpolator rotator0 = new RotationInterpolator(rotAlpha1, rotTG0, yAxis, 0.0f, (float) Math.PI * (2.0f));
 		rotator0.setSchedulingBounds(bounds);	
 		
 		
@@ -167,9 +167,9 @@ public class SolarSystem extends JFrame {
 		t.setScale(new Vector3d(2.0,2.0,2.0));
 		t.setTranslation(new Vector3d(0.0,0.0,-5));
 		Transform3D helperT3D = new Transform3D();
-		helperT3D.rotZ(Math.PI);
+		helperT3D.rotZ(Math.PI/6);
 		t.mul(helperT3D);
-		helperT3D.rotX(Math.PI/2);
+		helperT3D.rotX(Math.PI/4);
 		t.mul(helperT3D);
 		TransformGroup rotTG1 = new TransformGroup(t);
 		//*****Rotation*** END
@@ -177,7 +177,7 @@ public class SolarSystem extends JFrame {
 		//*****Rotation2*********
 		TransformGroup rotTG2 = new TransformGroup();
 		rotTG2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		Alpha rotAlpha2 = new Alpha(1, 4000);
+		Alpha rotAlpha2 = new Alpha(-1, 18000);
 		Transform3D yAxis2 = new Transform3D();
 		RotationInterpolator rotator2 = new RotationInterpolator(rotAlpha2, rotTG2, yAxis2,0.0f, (float) Math.PI * 2.0f);
 		rotator2.setSchedulingBounds(bounds);
