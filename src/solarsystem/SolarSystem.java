@@ -158,7 +158,7 @@ public class SolarSystem extends JFrame {
 		Alpha rotAlpha1 = new Alpha(-1, 18000);
 		Transform3D yAxis = new Transform3D();
 		
-		//float variable controls how much of a rotation
+		//float variable controls how much of a rotation 2.0f = full rotation
 		RotationInterpolator rotator0 = new RotationInterpolator(rotAlpha1, rotTG0, yAxis, 0.0f, (float) Math.PI * (2.0f));
 		rotator0.setSchedulingBounds(bounds);	
 		
@@ -169,7 +169,7 @@ public class SolarSystem extends JFrame {
 		Transform3D helperT3D = new Transform3D();
 		helperT3D.rotZ(Math.PI/6);
 		t.mul(helperT3D);
-		helperT3D.rotX(Math.PI/4);
+		helperT3D.rotX(Math.PI/4);//rotation about X tilts it forward or backward
 		t.mul(helperT3D);
 		TransformGroup rotTG1 = new TransformGroup(t);
 		//*****Rotation*** END
@@ -184,17 +184,32 @@ public class SolarSystem extends JFrame {
 		//****Rotation2******
 		
 		
+		//***Rotation3
+		TransformGroup rotTG3 = new TransformGroup();
+		rotTG3.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		Alpha rotAlpha3 = new Alpha(-1,18000);
+		Transform3D yAxis3 = new Transform3D();
+		RotationInterpolator rotator3 = new RotationInterpolator(rotAlpha3, rotTG3, yAxis3, 0.0f, (float) Math.PI*2.0f);
+		rotator3.setSchedulingBounds(bounds);
+		//****End Rotation3***
+		
+		
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
 		sunTG.addChild(rotTG0);
 		rotTG0.addChild(rotTG1);
 		rotTG1.addChild(rotTG2);
+		rotTG2.addChild(rotTG3);
 			rotTG2.addChild(mercury);
 			rotTG2.addChild(planetaryRing);
-//			rotTG2.addChild(venus);
-			rotTG2.addChild(rotator2);
+			
 			rotTG0.addChild(rotator0);
+			rotTG2.addChild(rotator2);
+		rotTG3.addChild(venusTG);
+		venusTG.addChild(venus);
+//		rotTG3.addChild(rotator3);
+			
 		sunTG.addChild(sun);
 		
 		
@@ -243,6 +258,8 @@ public class SolarSystem extends JFrame {
 //		
 //		return rotTG;
 //	}
+
+
 	/**
 	 * Helper method to create Transform groups.
 	 * Helps to make groups that 
