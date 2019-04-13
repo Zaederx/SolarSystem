@@ -111,7 +111,7 @@ public class SolarSystem extends JFrame {
 	 */
 	public BranchGroup createSceneGraph () {
 		//creates the bound of the universe
-		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0), 10.0);
+		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0), 10000.0);
 		
 		//single branch group
 		BranchGroup objRoot = new BranchGroup();
@@ -201,13 +201,14 @@ public class SolarSystem extends JFrame {
 		rotTG0.addChild(rotTG1);
 		rotTG1.addChild(rotTG2);
 		rotTG2.addChild(rotTG3);
-			rotTG2.addChild(mercuryTG);
-			mercuryTG.addChild(mercury);
-			mercuryTG.addChild(planetaryRing);
+//			rotTG2.addChild(mercuryTG);
+//			mercuryTG.addChild(mercury);
+			rotTG1.addChild(mercury);
+			rotTG1.addChild(planetaryRing);
 			
 			rotTG0.addChild(rotator0);
 			rotTG2.addChild(rotator2);
-		rotTG1.addChild(venusTG);
+		rotTG2.addChild(venusTG);
 		venusTG.addChild(venus);
 //		rotTG3.addChild(rotator3);
 			
