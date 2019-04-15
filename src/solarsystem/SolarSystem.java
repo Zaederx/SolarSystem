@@ -9,6 +9,7 @@ import java.io.File;
 import javax.media.j3d.Alpha;
 import javax.media.j3d.AmbientLight;
 import javax.media.j3d.Appearance;
+import javax.media.j3d.Background;
 import javax.media.j3d.BoundingSphere;
 import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
@@ -68,20 +69,23 @@ public class SolarSystem extends JFrame {
 		myCanvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 		getContentPane().add("Center", myCanvas3D);
 		SimpleUniverse simpUniv = new SimpleUniverse(myCanvas3D);
-		
+		simpUniv.getViewingPlatform().setNominalViewingTransform();
 		//viewing platform
 		TransformGroup cameraTG = simpUniv.getViewingPlatform().getViewPlatformTransform();
 		
 		//position of viewing platform
 		Vector3f translate = new Vector3f();
 		Transform3D T3D = new Transform3D();
-	
+		//move along z axis by 10.0f ("move away from the screen")
+		translate.set(0.0f, 0.0f, 25.0f);
+		T3D.setTranslation(translate);
+		//add translate transform to cameraTG
+		cameraTG.setTransform(T3D);
+		
+		//Add scene to Universe
 		BranchGroup scene = createSceneGraph();
 		simpUniv.addBranchGraph(scene);
-		//move along z axis by 10.0f ("move away from the screen")
-		translate.set(0.0f, 0.0f, 10.0f);
-		T3D.setTranslation(translate);
-		cameraTG.setTransform(T3D);
+		
 		//addLight(simpUniv);
 		setTitle("Step 1: A simple cube");
 		setSize(700,700);
@@ -126,17 +130,20 @@ public class SolarSystem extends JFrame {
 	public BranchGroup createSceneGraph () {
 		//creates the bound of the universe
 		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0), 10000.0);
+		TextureLoader textureLoader = new TextureLoader("src/textures/staryBackground.jpg", null);
+		Background bgImage = new Background(textureLoader.getImage());
+		bgImage.setApplicationBounds(bounds);
 		
 		//single branch group
 		BranchGroup objRoot = new BranchGroup();
-		
+		objRoot.addChild(bgImage);
 		//transform group for the branch group
 		TransformGroup sunTG = new TransformGroup();
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		
 		//create 3D shapes and appearances
-		Sun sun = new Sun(.5f);
+		Sun sun = new Sun();
 //		Sphere sun = celestialBody(.5f, 1f, 1f, 0f);
 		
 		
@@ -162,7 +169,7 @@ public class SolarSystem extends JFrame {
 //		Texture texImage = new TextureLoader("src/solarsystem/mercury.jpg", this).getTexture();
 		File pic = new File("src/solarsystem/mercury.jpg");
 	
-		TextureLoader loader = new TextureLoader("src/solarsystem/mercury.jpg", this);
+		TextureLoader loader = new TextureLoader("src/textures/mercury.jpg", this);
 //		ImageComponent2D image = loader.getImage();
 		ImageComponent2D image = loader.getScaledImage(256, 256);
 		Texture2D texture = new Texture2D(Texture2D.BASE_LEVEL, Texture2D.RGB, image.getWidth(),image.getHeight());
