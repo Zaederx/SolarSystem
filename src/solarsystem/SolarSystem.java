@@ -4,6 +4,7 @@ package solarsystem;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.io.File;
 
 import javax.media.j3d.Alpha;
 import javax.media.j3d.AmbientLight;
@@ -13,7 +14,15 @@ import javax.media.j3d.BranchGroup;
 import javax.media.j3d.Canvas3D;
 import javax.media.j3d.ColoringAttributes;
 import javax.media.j3d.DirectionalLight;
+import javax.media.j3d.ImageComponent2D;
+import javax.media.j3d.ImageComponent3D;
+import javax.media.j3d.Material;
 import javax.media.j3d.RotationInterpolator;
+import javax.media.j3d.TexCoordGeneration;
+import javax.media.j3d.Texture;
+import javax.media.j3d.Texture2D;
+import javax.media.j3d.Texture3D;
+import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.swing.JFrame;
@@ -23,14 +32,19 @@ import javax.vecmath.Point3d;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
+import com.jogamp.opengl.util.texture.TextureCoords;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.ColorCube;
+import com.sun.j3d.utils.geometry.Cone;
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.geometry.Sphere;
+import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
+
+import celestialBody.Sun;
 
 public class SolarSystem extends JFrame {
 
@@ -68,7 +82,7 @@ public class SolarSystem extends JFrame {
 		translate.set(0.0f, 0.0f, 10.0f);
 		T3D.setTranslation(translate);
 		cameraTG.setTransform(T3D);
-		addLight(simpUniv);
+		//addLight(simpUniv);
 		setTitle("Step 1: A simple cube");
 		setSize(700,700);
 		setVisible(true);
@@ -80,7 +94,7 @@ public class SolarSystem extends JFrame {
 	 */
 	public void addLight(SimpleUniverse su) {
 		BranchGroup bgLight = new BranchGroup();
-		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),100.0);
+		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
 		
 		//set up light in the scene
 		Color3f ambientLColor = new Color3f(0.6f,0.6f,0.6f);
@@ -122,7 +136,8 @@ public class SolarSystem extends JFrame {
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		
 		//create 3D shapes and appearances
-		Sphere sun = celestialBody(.5f, 1f, 1f, 0f);
+		Sun sun = new Sun(.5f);
+//		Sphere sun = celestialBody(.5f, 1f, 1f, 0f);
 		
 		
 		
@@ -143,15 +158,56 @@ public class SolarSystem extends JFrame {
 		Transform3D mercuryT = new Transform3D();
 		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT, matrix);
 		Sphere mercury = celestialBody(0.5f, 1f, 0f, 0f);
+
+//		Texture texImage = new TextureLoader("src/solarsystem/mercury.jpg", this).getTexture();
+		File pic = new File("src/solarsystem/mercury.jpg");
+	
+		TextureLoader loader = new TextureLoader("src/solarsystem/mercury.jpg", this);
+//		ImageComponent2D image = loader.getImage();
+		ImageComponent2D image = loader.getScaledImage(256, 256);
+		Texture2D texture = new Texture2D(Texture2D.BASE_LEVEL, Texture2D.RGB, image.getWidth(),image.getHeight());
+
+//		Texture3D texture = new Texture3D(Texture3D.BASE_LEVEL, Texture3D.RGB, image.getWidth(),image.getHeight(), 1 );
+		texture.setImage(0, image);
+		
+		Appearance mTextureApp = new Appearance();
+		mTextureApp.setTexture(texture);
+		
+		TextureAttributes textureAttr = new TextureAttributes();
+		textureAttr.setTextureMode(TextureAttributes.REPLACE);
+		mTextureApp.setTextureAttributes(textureAttr);
+		
+		Material material = new Material();
+		material.setShininess(0f);
+		
+		mTextureApp.setMaterial(material);
+		
+		TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.OBJECT_LINEAR,
+				TexCoordGeneration.TEXTURE_COORDINATE_2);
+		
+		mTextureApp.setTexCoordGeneration(tcg);
+		mercury.setAppearance(mTextureApp);
+	
 		//***Mercury*** END
 		
 		
 		//**Venus***
-		Transform3D venusT = new Transform3D();
-		TransformGroup venusTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0, venusT);
+		Transform3D venusT = new Transform3D();//replace with space ship later - has and interesting path - create new path for venus
+		TransformGroup venusTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0, venusT); 
 		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
+		
+		
 		//**Venus *** END
 		
+		
+		//**Space ship***
+		Appearance c1App = new Appearance();
+		Cone cone1 = new Cone(0.5f,1f,c1App);
+		Appearance c2App = new Appearance();
+		Cone cone2 = new Cone(0.4f, 0.5f, c2App);
+		
+		
+		//***Spaceship end***
 		//*****Rotation*****
 		TransformGroup rotTG0 = new TransformGroup();
 		rotTG0.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
@@ -212,7 +268,7 @@ public class SolarSystem extends JFrame {
 		venusTG.addChild(venus);
 //		rotTG3.addChild(rotator3);
 			
-		sunTG.addChild(sun);
+		sunTG.addChild(sun.getCelestialBody());
 		
 		
 		//Create rotation behaviour
