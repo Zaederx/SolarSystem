@@ -90,7 +90,7 @@ public class SolarSystem extends JFrame {
 		BranchGroup scene = createSceneGraph();
 		simpUniv.addBranchGraph(scene);
 		
-		//addLight(simpUniv);
+//		addLight(simpUniv);
 		setTitle("Step 1: A simple cube");
 		setSize(700,700);
 		setVisible(true);
@@ -158,11 +158,12 @@ public class SolarSystem extends JFrame {
 		Transform3D mercuryT = new Transform3D();
 		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT);
 		mercuryTG.addChild(mercury.getCelestialBody());
-		
+		mercuryTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D venusT = new Transform3D();
 		TransformGroup venusTG = createTG(0.0,0.0,-10, 2.0,2.0,2.0,venusT);
 		venusTG.addChild(venus.getCelestialBody());
+		venusTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D earthT = new Transform3D();
 		TransformGroup earthTG = createTG(0.0,0.0,-15, 2.0,2.0,2.0,earthT);
@@ -244,14 +245,15 @@ public class SolarSystem extends JFrame {
 		
 		//***Spaceship end***
 		//*****Rotation*****
-		TransformGroup rotTG0 = new TransformGroup();
-		rotTG0.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		TransformGroup rotTG1 = new TransformGroup();
+		rotTG1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		Alpha rotAlpha1 = new Alpha(-1, 18000);
 		Transform3D yAxis = new Transform3D();
 		
-		//float variable controls how much of a rotation 2.0f = full rotation
-		RotationInterpolator rotator0 = new RotationInterpolator(rotAlpha1, rotTG0, yAxis, 0.0f, (float) Math.PI * (2.0f));
-		rotator0.setSchedulingBounds(bounds);	
+		//0.0F controls how much it spirals to the center (how offeset it is to spiral to the center)
+		//(float) Math.PI variable controls how much of a rotation 2.0f = full rotation
+		RotationInterpolator rotator1 = new RotationInterpolator(rotAlpha1, rotTG1, yAxis, 0.0f, (float) Math.PI * (2.0f));
+		rotator1.setSchedulingBounds(bounds);	
 		
 		
 		Transform3D t = new Transform3D();
@@ -262,7 +264,7 @@ public class SolarSystem extends JFrame {
 		t.mul(helperT3D);
 		helperT3D.rotX(Math.PI/4);//rotation about X tilts it forward or backward
 		t.mul(helperT3D);
-		TransformGroup rotTG1 = new TransformGroup(t);
+//		TransformGroup rotTG1 = new TransformGroup(t);
 		//*****Rotation*** END
 		
 		//*****Rotation2*********
@@ -270,7 +272,7 @@ public class SolarSystem extends JFrame {
 		rotTG2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		Alpha rotAlpha2 = new Alpha(-1, 18000);
 		Transform3D yAxis2 = new Transform3D();
-		RotationInterpolator rotator2 = new RotationInterpolator(rotAlpha2, rotTG2, yAxis2,0.0f, (float) Math.PI * 2.0f);
+		RotationInterpolator rotator2 = new RotationInterpolator(rotAlpha2, rotTG2, yAxis2,0.0f, (float) Math.PI * 4.0f);
 		rotator2.setSchedulingBounds(bounds);
 		//****Rotation2******
 		
@@ -291,30 +293,36 @@ public class SolarSystem extends JFrame {
 //		planets.addChild(earthTG);
 //		planets.addChild(marsTG);
 //		planets.addChild(jupiterTG);
-		mercuryTG.addChild(rotator0);
+
 //		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
-		sunTG.addChild(rotTG0);
+		sunTG.addChild(rotTG1);
+		rotTG1.addChild(rotTG2);
+		rotTG2.addChild(rotTG3);
+		
+		rotTG1.addChild(mercuryTG);
+		rotTG1.addChild(rotator1);
+		
+		rotTG2.addChild(venusTG);
+		rotTG2.addChild(rotator2);
+		
+		rotTG3.addChild(earthTG);
+		rotTG3.addChild(rotator3);
 //		rotTG0.addChild(rotator0);
-		rotTG0.addChild(mercuryTG);
-//		rotTG0.addChild();
-//			rotTG2.addChild(mercuryTG);
-//			mercuryTG.addChild(mercury);
-//			rotTG1.addChild(mercuryTG);
-//			rotTG1.addChild(rotator2);
-//			rotTG1.addChild(rotTG2);
-			rotTG2.addChild(rotator2);
-//			rotTG1.addChild(planetaryRing);
-//				rotTG2.addChild(venus.getCelestialBody());
-//				rotTG2.addChild(rotator2);
-				rotTG2.addChild(rotTG3);
-				
-//				rotTG2.addChild(venusTG);
-//				venusTG.addChild(venus);
-//		rotTG3.addChild(rotator3);
-					rotTG3.addChild(mars.getCelestialBody());
+		
+//		rotTG0.addChild(rotTG2);
+			
+//			rotTG2.addChild(venusTG);
+//			rotTG2.addChild(rotator2);
+			
+
+//			rotTG1.addChild(venusTG);
+
+//				rotTG2.addChild(rotTG3);
+
+//					rotTG3.addChild(mars.getCelestialBody());
 			
 		sunTG.addChild(sun.getCelestialBody());
 		
