@@ -272,11 +272,9 @@ public class SolarSystem extends JFrame {
 			rotTG1.addChild(mercury.getCelestialBody());
 			rotTG1.addChild(planetaryRing);
 				rotTG2.addChild(rotTG3);
-			
-			
-			rotTG2.addChild(rotator2);
-		rotTG2.addChild(venusTG);
-		venusTG.addChild(venus);
+				rotTG2.addChild(rotator2);
+				rotTG2.addChild(venusTG);
+				venusTG.addChild(venus);
 //		rotTG3.addChild(rotator3);
 			
 		sunTG.addChild(sun.getCelestialBody());
