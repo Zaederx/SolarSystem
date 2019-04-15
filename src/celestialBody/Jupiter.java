@@ -42,8 +42,8 @@ public class Jupiter extends CelestialBody{
 	
 	mTextureApp.setMaterial(material);
 	
-	TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.OBJECT_LINEAR,
-			TexCoordGeneration.TEXTURE_COORDINATE_2);
+	TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.SPHERE_MAP,
+			TexCoordGeneration.TEXTURE_COORDINATE_3);
 	
 	mTextureApp.setTexCoordGeneration(tcg);
 	getCelestialBody().setAppearance(mTextureApp);

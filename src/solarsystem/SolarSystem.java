@@ -285,19 +285,20 @@ public class SolarSystem extends JFrame {
 		//****End Rotation3***
 		
 	
-		BranchGroup planets = new BranchGroup();
-		planets.addChild(mercuryTG);
-		planets.addChild(venusTG);
-		planets.addChild(earthTG);
-		planets.addChild(marsTG);
-		planets.addChild(jupiterTG);
+//		BranchGroup planets = new BranchGroup();
+//		planets.addChild(mercuryTG);
+//		planets.addChild(venusTG);
+//		planets.addChild(earthTG);
+//		planets.addChild(marsTG);
+//		planets.addChild(jupiterTG);
+		mercuryTG.addChild(rotator0);
 //		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
 		sunTG.addChild(rotTG0);
-		rotTG0.addChild(rotator0);
-		rotTG0.addChild(planets);
+//		rotTG0.addChild(rotator0);
+		rotTG0.addChild(mercuryTG);
 //		rotTG0.addChild();
 //			rotTG2.addChild(mercuryTG);
 //			mercuryTG.addChild(mercury);
