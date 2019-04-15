@@ -25,54 +25,15 @@ public class Sun extends CelestialBody{
 	private static float defaultRed = 0f;
 	private static float defaultGreen = 0f;
 	private static float defaultBlue = 0f;
-
+	static String texImage = "src/textures/sun.jpg";
 	public Sun () {
-		super(defaultSize,defaultBlue,defaultGreen, defaultBlue);
-		setTexture();
+		super(defaultSize,defaultRed,defaultGreen, defaultBlue);
+		setTexture(texImage);
 		emitLight();
 	}
-	/*
-	 * Contrustor.
-	 */
-	public Sun (float sphereSize, float red, float green, float blue) {
-		super(sphereSize, red, green, blue);
-		setTexture();
-		emitLight();
-		
-	}
 	
-	/**
-	 * Sets texture of the Sun.
-	 */
-	public void setTexture () {
-	TextureLoader loader = new TextureLoader("src/textures/sun.jpg", null);
-//	ImageComponent2D image = loader.getImage();
-	ImageComponent2D image = loader.getScaledImage(256, 256);
-	Texture2D texture = new Texture2D(Texture2D.BASE_LEVEL, Texture2D.RGB, image.getWidth(),image.getHeight());
-
-//	Texture3D texture = new Texture3D(Texture3D.BASE_LEVEL, Texture3D.RGB, image.getWidth(),image.getHeight(), 1 );
-	texture.setImage(0, image);
 	
-	Appearance mTextureApp = new Appearance();
-	mTextureApp.setTexture(texture);
 	
-	TextureAttributes textureAttr = new TextureAttributes();
-	textureAttr.setTextureMode(TextureAttributes.REPLACE);
-	mTextureApp.setTextureAttributes(textureAttr);
-	
-	Material material = new Material();
-	material.setShininess(0f);
-	material.setEmissiveColor(0.6f,0.6f,0.6f);
-	material.setLightingEnable(true);
-	
-	mTextureApp.setMaterial(material);
-	
-	TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.SPHERE_MAP,
-			TexCoordGeneration.TEXTURE_COORDINATE_3);
-	
-	mTextureApp.setTexCoordGeneration(tcg);
-	getCelestialBody().setAppearance(mTextureApp);
-	}
 	
 	public void emitLight () {
 		BranchGroup sunLight = new BranchGroup();

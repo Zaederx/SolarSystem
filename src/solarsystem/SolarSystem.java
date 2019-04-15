@@ -46,9 +46,13 @@ import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
 import celestialBody.Earth;
+import celestialBody.Jupiter;
 import celestialBody.Mars;
 import celestialBody.Mercury;
+import celestialBody.Neptune;
+import celestialBody.Saturn;
 import celestialBody.Sun;
+import celestialBody.Uranus;
 import celestialBody.Venus;
 
 public class SolarSystem extends JFrame {
@@ -152,6 +156,11 @@ public class SolarSystem extends JFrame {
 		Venus venus = new Venus();
 		Earth earth = new Earth();
 		Mars mars = new Mars();
+		Jupiter jupiter = new Jupiter();
+		Saturn saturn = new Saturn();
+		Uranus uranus = new Uranus();
+		Neptune neptune = new Neptune();
+		
 		
 		
 		//TransformGroup
@@ -168,72 +177,36 @@ public class SolarSystem extends JFrame {
 		Transform3D earthT = new Transform3D();
 		TransformGroup earthTG = createTG(0.0,0.0,-15, 2.0,2.0,2.0,earthT);
 		earthTG.addChild(earth.getCelestialBody());
+		earthTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D marsT = new Transform3D();
 		TransformGroup marsTG = createTG(0.0,0.0,-20, 2.0,2.0,2.0,marsT);
+		marsTG.addChild(mars.getCelestialBody());
+		marsTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		
+		
 		Transform3D jupiterT = new Transform3D();
-		TransformGroup jupiterTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,earthT);
-//		Sphere sun = celestialBody(.5f, 1f, 1f, 0f);
+		TransformGroup jupiterTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,jupiterT);
+		jupiterTG.addChild(jupiter.getCelestialBody());
+		jupiterTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		
+		Transform3D saturnT = new Transform3D();
+		TransformGroup saturnTG = createTG(0.0,0.0,-20, 2.0,2.0,2.0,saturnT);
+		saturnTG.addChild(saturn.getCelestialBody());
+		saturnTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		
+		Transform3D uranusT = new Transform3D();
+		TransformGroup uranusTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,uranusT);
+		uranusTG.addChild(uranus.getCelestialBody());
+		uranusTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		
+		Transform3D neptuneT = new Transform3D();
+		TransformGroup neptuneTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,neptuneT);
+		neptuneTG.addChild(neptune.getCelestialBody());
+		neptuneTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
-//		//create appearance for box
-//		Appearance greenApp = new Appearance();
-//		Color3f greenColor = new Color3f(0.0f, 1.0f,0.0f);
-//		ColoringAttributes greenCA = new ColoringAttributes();
-//		greenCA.setColor(greenColor);
-//		greenApp.setColoringAttributes(greenCA);
-//		
-//		
-//		//Create box and add the appearance
-//		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, greenApp);
-//		
-		//*****Mercury
-		//matrix for translation t1
-//		Matrix4d matrix = new Matrix4d();
-//		Transform3D mercuryT = new Transform3D();
-//		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT, matrix);
-//		Sphere mercury = celestialBody(0.5f, 1f, 0f, 0f);
 
-//		Texture texImage = new TextureLoader("src/solarsystem/mercury.jpg", this).getTexture();
-//		File pic = new File("src/solarsystem/mercury.jpg");
-//	
-//		TextureLoader loader = new TextureLoader("src/textures/mercury.jpg", this);
-////		ImageComponent2D image = loader.getImage();
-//		ImageComponent2D image = loader.getScaledImage(256, 256);
-//		Texture2D texture = new Texture2D(Texture2D.BASE_LEVEL, Texture2D.RGB, image.getWidth(),image.getHeight());
-//
-////		Texture3D texture = new Texture3D(Texture3D.BASE_LEVEL, Texture3D.RGB, image.getWidth(),image.getHeight(), 1 );
-//		texture.setImage(0, image);
-//		
-//		Appearance mTextureApp = new Appearance();
-//		mTextureApp.setTexture(texture);
-//		
-//		TextureAttributes textureAttr = new TextureAttributes();
-//		textureAttr.setTextureMode(TextureAttributes.REPLACE);
-//		mTextureApp.setTextureAttributes(textureAttr);
-//		
-//		Material material = new Material();
-//		material.setShininess(0f);
-//		
-//		mTextureApp.setMaterial(material);
-//		
-//		TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.OBJECT_LINEAR,
-//				TexCoordGeneration.TEXTURE_COORDINATE_2);
-//		
-//		mTextureApp.setTexCoordGeneration(tcg);
-//		mercury.setAppearance(mTextureApp);
-	
-		//***Mercury*** END
-		
-		
-		//**Venus***
-//		Transform3D venusT = new Transform3D();//replace with space ship later - has and interesting path - create new path for venus
-//		TransformGroup venusTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0, venusT); 
-//		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
-		
-		
-		//**Venus *** END
 		
 		
 		//**Space ship***

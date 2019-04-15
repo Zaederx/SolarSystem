@@ -14,37 +14,9 @@ public class Venus extends CelestialBody {
 	static float defaultRed = 1f;
 	static float defaultGreen = 0f;
 	static float defaultBlue = 0f;
-
+	static String texImage = "src/textures/venus.jpg";
 	public Venus () {
 		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
-		setTexture();
-	}
-	
-	/**
-	 * Sets the texture of Jupiter.
-	 */
-	public void setTexture () {
-	TextureLoader loader = new TextureLoader("src/textures/venus.jpg", null);
-	ImageComponent2D image = loader.getScaledImage(256, 256);
-	Texture2D texture = new Texture2D(Texture2D.BASE_LEVEL, Texture2D.RGB, image.getWidth(),image.getHeight());
-	texture.setImage(0, image);
-	
-	Appearance mTextureApp = new Appearance();
-	mTextureApp.setTexture(texture);
-	
-	TextureAttributes textureAttr = new TextureAttributes();
-	textureAttr.setTextureMode(TextureAttributes.REPLACE);
-	mTextureApp.setTextureAttributes(textureAttr);
-	
-	Material material = new Material();
-	material.setShininess(0f);
-	
-	mTextureApp.setMaterial(material);
-	
-	TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.SPHERE_MAP,
-			TexCoordGeneration.TEXTURE_COORDINATE_3);
-	
-	mTextureApp.setTexCoordGeneration(tcg);
-	getCelestialBody().setAppearance(mTextureApp);
+		setTexture(texImage);
 	}
 }
