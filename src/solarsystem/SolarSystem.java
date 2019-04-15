@@ -45,8 +45,11 @@ import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
+import celestialBody.Earth;
+import celestialBody.Mars;
 import celestialBody.Mercury;
 import celestialBody.Sun;
+import celestialBody.Venus;
 
 public class SolarSystem extends JFrame {
 
@@ -146,22 +149,44 @@ public class SolarSystem extends JFrame {
 		//create 3D shapes and appearances
 		Sun sun = new Sun();
 		Mercury mercury = new Mercury();
+		Venus venus = new Venus();
+		Earth earth = new Earth();
+		Mars mars = new Mars();
 		
+		
+		//TransformGroup
+		Transform3D mercuryT = new Transform3D();
+		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT);
+		mercuryTG.addChild(mercury.getCelestialBody());
+		
+		
+		Transform3D venusT = new Transform3D();
+		TransformGroup venusTG = createTG(0.0,0.0,-10, 2.0,2.0,2.0,venusT);
+		venusTG.addChild(venus.getCelestialBody());
+		
+		Transform3D earthT = new Transform3D();
+		TransformGroup earthTG = createTG(0.0,0.0,-15, 2.0,2.0,2.0,earthT);
+		earthTG.addChild(earth.getCelestialBody());
+		
+		Transform3D marsT = new Transform3D();
+		TransformGroup marsTG = createTG(0.0,0.0,-20, 2.0,2.0,2.0,marsT);
+		Transform3D jupiterT = new Transform3D();
+		TransformGroup jupiterTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,earthT);
 //		Sphere sun = celestialBody(.5f, 1f, 1f, 0f);
 		
 		
 		
-		//create appearance for box
-		Appearance greenApp = new Appearance();
-		Color3f greenColor = new Color3f(0.0f, 1.0f,0.0f);
-		ColoringAttributes greenCA = new ColoringAttributes();
-		greenCA.setColor(greenColor);
-		greenApp.setColoringAttributes(greenCA);
-		
-		
-		//Create box and add the appearance
-		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, greenApp);
-		
+//		//create appearance for box
+//		Appearance greenApp = new Appearance();
+//		Color3f greenColor = new Color3f(0.0f, 1.0f,0.0f);
+//		ColoringAttributes greenCA = new ColoringAttributes();
+//		greenCA.setColor(greenColor);
+//		greenApp.setColoringAttributes(greenCA);
+//		
+//		
+//		//Create box and add the appearance
+//		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, greenApp);
+//		
 		//*****Mercury
 		//matrix for translation t1
 //		Matrix4d matrix = new Matrix4d();
@@ -202,9 +227,9 @@ public class SolarSystem extends JFrame {
 		
 		
 		//**Venus***
-		Transform3D venusT = new Transform3D();//replace with space ship later - has and interesting path - create new path for venus
-		TransformGroup venusTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0, venusT); 
-		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
+//		Transform3D venusT = new Transform3D();//replace with space ship later - has and interesting path - create new path for venus
+//		TransformGroup venusTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0, venusT); 
+//		Sphere venus = celestialBody(0.5f, 1f, .7f, .5f);
 		
 		
 		//**Venus *** END
@@ -259,23 +284,36 @@ public class SolarSystem extends JFrame {
 		rotator3.setSchedulingBounds(bounds);
 		//****End Rotation3***
 		
-		
+	
+		BranchGroup planets = new BranchGroup();
+		planets.addChild(mercuryTG);
+		planets.addChild(venusTG);
+		planets.addChild(earthTG);
+		planets.addChild(marsTG);
+		planets.addChild(jupiterTG);
+//		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
 		sunTG.addChild(rotTG0);
 		rotTG0.addChild(rotator0);
-		rotTG0.addChild(rotTG1);
-			rotTG1.addChild(rotTG2);	
+		rotTG0.addChild(planets);
+//		rotTG0.addChild();
 //			rotTG2.addChild(mercuryTG);
 //			mercuryTG.addChild(mercury);
-			rotTG1.addChild(mercury.getCelestialBody());
-			rotTG1.addChild(planetaryRing);
+//			rotTG1.addChild(mercuryTG);
+//			rotTG1.addChild(rotator2);
+//			rotTG1.addChild(rotTG2);
+			rotTG2.addChild(rotator2);
+//			rotTG1.addChild(planetaryRing);
+//				rotTG2.addChild(venus.getCelestialBody());
+//				rotTG2.addChild(rotator2);
 				rotTG2.addChild(rotTG3);
-				rotTG2.addChild(rotator2);
-				rotTG2.addChild(venusTG);
-				venusTG.addChild(venus);
+				
+//				rotTG2.addChild(venusTG);
+//				venusTG.addChild(venus);
 //		rotTG3.addChild(rotator3);
+					rotTG3.addChild(mars.getCelestialBody());
 			
 		sunTG.addChild(sun.getCelestialBody());
 		
