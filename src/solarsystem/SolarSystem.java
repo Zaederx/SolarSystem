@@ -45,6 +45,7 @@ import com.sun.j3d.utils.geometry.Sphere;
 import com.sun.j3d.utils.image.TextureLoader;
 import com.sun.j3d.utils.universe.SimpleUniverse;
 
+import celestialBody.Mercury;
 import celestialBody.Sun;
 
 public class SolarSystem extends JFrame {
@@ -144,6 +145,8 @@ public class SolarSystem extends JFrame {
 		
 		//create 3D shapes and appearances
 		Sun sun = new Sun();
+		Mercury mercury = new Mercury();
+		
 //		Sphere sun = celestialBody(.5f, 1f, 1f, 0f);
 		
 		
@@ -161,10 +164,10 @@ public class SolarSystem extends JFrame {
 		
 		//*****Mercury
 		//matrix for translation t1
-		Matrix4d matrix = new Matrix4d();
-		Transform3D mercuryT = new Transform3D();
-		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT, matrix);
-		Sphere mercury = celestialBody(0.5f, 1f, 0f, 0f);
+//		Matrix4d matrix = new Matrix4d();
+//		Transform3D mercuryT = new Transform3D();
+//		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT, matrix);
+//		Sphere mercury = celestialBody(0.5f, 1f, 0f, 0f);
 
 //		Texture texImage = new TextureLoader("src/solarsystem/mercury.jpg", this).getTexture();
 		File pic = new File("src/solarsystem/mercury.jpg");
@@ -261,15 +264,16 @@ public class SolarSystem extends JFrame {
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(sunTG);
 		sunTG.addChild(rotTG0);
+		rotTG0.addChild(rotator0);
 		rotTG0.addChild(rotTG1);
-		rotTG1.addChild(rotTG2);
-		rotTG2.addChild(rotTG3);
+			rotTG1.addChild(rotTG2);	
 //			rotTG2.addChild(mercuryTG);
 //			mercuryTG.addChild(mercury);
-			rotTG1.addChild(mercury);
+			rotTG1.addChild(mercury.getCelestialBody());
 			rotTG1.addChild(planetaryRing);
+				rotTG2.addChild(rotTG3);
 			
-			rotTG0.addChild(rotator0);
+			
 			rotTG2.addChild(rotator2);
 		rotTG2.addChild(venusTG);
 		venusTG.addChild(venus);
