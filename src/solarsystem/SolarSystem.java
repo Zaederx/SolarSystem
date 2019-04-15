@@ -84,11 +84,35 @@ public class SolarSystem extends JFrame {
 		//position of viewing platform
 		Vector3f translate = new Vector3f();
 		Transform3D T3D = new Transform3D();
-		//move along z axis by 10.0f ("move away from the screen")
+		//move along z axis by 25.0f ("move away from the screen")
 		translate.set(0.0f, 0.0f, 25.0f);
 		T3D.setTranslation(translate);
+//		T3D.rotX(Math.PI*1f);
 		//add translate transform to cameraTG
 		cameraTG.setTransform(T3D);
+		
+		
+//		//***Spaceship end***
+//		//*****Rotation*****
+//		
+//		Alpha rotAlpha1 = new Alpha(-1, 18000);
+//		Transform3D yAxis = new Transform3D();
+//		
+//		//0.0F controls how much it spirals to the center (how offeset it is to spiral to the center)
+//		//(float) Math.PI variable controls how much of a rotation 2.0f = full rotation
+//		RotationInterpolator rotator1 = new RotationInterpolator(rotAlpha1, rotTG1, yAxis, 0.0f, (float) Math.PI * (2.0f));
+//		rotator1.setSchedulingBounds(bounds);	
+//		
+//		
+//		Transform3D t = new Transform3D();
+//		t.setScale(new Vector3d(2.0,2.0,2.0));
+//		t.setTranslation(new Vector3d(0.0,0.0,-5));
+//		Transform3D helperT3D = new Transform3D();
+//		helperT3D.rotZ(Math.PI/6);
+//		t.mul(helperT3D);
+//		helperT3D.rotX(Math.PI/4);//rotation about X tilts it forward or backward
+//		t.mul(helperT3D);
+////		TransformGroup rotTG1 = new TransformGroup(t);
 		
 		//Add scene to Universe
 		BranchGroup scene = createSceneGraph();
@@ -222,22 +246,20 @@ public class SolarSystem extends JFrame {
 		rotTG1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		Alpha rotAlpha1 = new Alpha(-1, 18000);
 		Transform3D yAxis = new Transform3D();
-		
 		//0.0F controls how much it spirals to the center (how offeset it is to spiral to the center)
 		//(float) Math.PI variable controls how much of a rotation 2.0f = full rotation
 		RotationInterpolator rotator1 = new RotationInterpolator(rotAlpha1, rotTG1, yAxis, 0.0f, (float) Math.PI * (2.0f));
 		rotator1.setSchedulingBounds(bounds);	
 		
-		
-		Transform3D t = new Transform3D();
-		t.setScale(new Vector3d(2.0,2.0,2.0));
-		t.setTranslation(new Vector3d(0.0,0.0,-5));
-		Transform3D helperT3D = new Transform3D();
-		helperT3D.rotZ(Math.PI/6);
-		t.mul(helperT3D);
-		helperT3D.rotX(Math.PI/4);//rotation about X tilts it forward or backward
-		t.mul(helperT3D);
-//		TransformGroup rotTG1 = new TransformGroup(t);
+//		Transform3D t1 = new Transform3D();
+//		t1.setScale(new Vector3d(2.0,2.0,2.0));
+//		t1.setTranslation(new Vector3d(0.0,0.0,-5));
+//		Transform3D helperT3D = new Transform3D();
+//		helperT3D.rotZ(Math.PI/6);
+//		t1.mul(helperT3D);
+//		helperT3D.rotX(Math.PI/4);//rotation about X tilts it forward or backward
+//		t1.mul(helperT3D);
+//		rotTG1 = new TransformGroup(t1);
 		//*****Rotation*** END
 		
 		//*****Rotation2*********
@@ -247,6 +269,16 @@ public class SolarSystem extends JFrame {
 		Transform3D yAxis2 = new Transform3D();
 		RotationInterpolator rotator2 = new RotationInterpolator(rotAlpha2, rotTG2, yAxis2,0.0f, (float) Math.PI * 4.0f);
 		rotator2.setSchedulingBounds(bounds);
+		
+//		Transform3D t2 = new Transform3D();
+//		t2.setScale(new Vector3d(2.0,2.0,2.0));
+//		t2.setTranslation(new Vector3d(0.0,0.0,-5));
+//		Transform3D helperT3D2 = new Transform3D();
+//		helperT3D2.rotZ(Math.PI/6);
+//		t2.mul(helperT3D2);
+//		helperT3D2.rotX(Math.PI/4);//rotation about X tilts it forward or backward
+//		t2.mul(helperT3D2);
+//		rotTG2 = new TransformGroup(t2);
 		//****Rotation2******
 		
 		
@@ -257,6 +289,15 @@ public class SolarSystem extends JFrame {
 		Transform3D yAxis3 = new Transform3D();
 		RotationInterpolator rotator3 = new RotationInterpolator(rotAlpha3, rotTG3, yAxis3, 0.0f, (float) Math.PI*2.0f);
 		rotator3.setSchedulingBounds(bounds);
+//		Transform3D t3 = new Transform3D();
+//		t3.setScale(new Vector3d(2.0,2.0,2.0));
+//		t3.setTranslation(new Vector3d(0.0,0.0,-5));
+//		Transform3D helperT3D3 = new Transform3D();
+//		helperT3D3.rotZ(Math.PI/6);
+//		t3.mul(helperT3D3);
+//		helperT3D3.rotX(Math.PI/4);//rotation about X tilts it forward or backward
+//		t3.mul(helperT3D3);
+//		rotTG3 = new TransformGroup(t3);
 		//****End Rotation3***
 		
 	
