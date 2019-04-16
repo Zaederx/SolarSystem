@@ -86,8 +86,14 @@ public class SolarSystem extends JFrame {
 		Transform3D T3D = new Transform3D();
 		//move along z axis by 25.0f ("move away from the screen")
 		translate.set(0.0f, 0.0f, 25.0f);
+//		translate.angle(new Vector3f(45.0f, 30.0f,30.0f));
+		
+//		Transform3D t = new Transform3D();
 		T3D.setTranslation(translate);
-//		T3D.rotX(Math.PI*1f);
+//		T3D.rotX(Math.PI);
+//		T3D.perspective(0.1, 20.0, 0.1, 10.0);
+//		t.mul(T3D);
+		
 		//add translate transform to cameraTG
 		cameraTG.setTransform(T3D);
 		
