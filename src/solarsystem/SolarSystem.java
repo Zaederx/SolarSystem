@@ -54,6 +54,7 @@ import celestialBody.Saturn;
 import celestialBody.Sun;
 import celestialBody.Uranus;
 import celestialBody.Venus;
+import rotator.Rotation;
 
 public class SolarSystem extends JFrame {
 
@@ -195,44 +196,44 @@ public class SolarSystem extends JFrame {
 		
 		//TransformGroup
 		Transform3D mercuryT = new Transform3D();
-		TransformGroup mercuryTG = createTG(0.0,0.0,-5, 2.0,2.0,2.0,mercuryT);
+		TransformGroup mercuryTG = createTG(0.0,0.0,-2, 2.0,2.0,2.0,mercuryT);
 		mercuryTG.addChild(mercury.getCelestialBody());
 		mercuryTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D venusT = new Transform3D();
-		TransformGroup venusTG = createTG(0.0,0.0,-10, 2.0,2.0,2.0,venusT);
+		TransformGroup venusTG = createTG(0.0,0.0,-4, 2.0,2.0,2.0,venusT);
 		venusTG.addChild(venus.getCelestialBody());
 		venusTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D earthT = new Transform3D();
-		TransformGroup earthTG = createTG(0.0,0.0,-15, 2.0,2.0,2.0,earthT);
+		TransformGroup earthTG = createTG(0.0,0.0,-6, 2.0,2.0,2.0,earthT);
 		earthTG.addChild(earth.getCelestialBody());
 		earthTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D marsT = new Transform3D();
-		TransformGroup marsTG = createTG(0.0,0.0,-20, 2.0,2.0,2.0,marsT);
+		TransformGroup marsTG = createTG(0.0,0.0,-10, 2.0,2.0,2.0,marsT);
 		marsTG.addChild(mars.getCelestialBody());
 		marsTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		
 		Transform3D jupiterT = new Transform3D();
-		TransformGroup jupiterTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,jupiterT);
+		TransformGroup jupiterTG = createTG(0.0,0.0,-12, 2.0,2.0,2.0,jupiterT);
 		jupiterTG.addChild(jupiter.getCelestialBody());
 		jupiterTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D saturnT = new Transform3D();
-		TransformGroup saturnTG = createTG(0.0,0.0,-20, 2.0,2.0,2.0,saturnT);
+		TransformGroup saturnTG = createTG(0.0,0.0,-14, 2.0,2.0,2.0,saturnT);
 		saturnTG.addChild(saturn.getCelestialBody());
 		saturnTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D uranusT = new Transform3D();
-		TransformGroup uranusTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,uranusT);
+		TransformGroup uranusTG = createTG(0.0,0.0,-16, 2.0,2.0,2.0,uranusT);
 		uranusTG.addChild(uranus.getCelestialBody());
 		uranusTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		
 		Transform3D neptuneT = new Transform3D();
-		TransformGroup neptuneTG = createTG(0.0,0.0,-25, 2.0,2.0,2.0,neptuneT);
+		TransformGroup neptuneTG = createTG(0.0,0.0,-18, 2.0,2.0,2.0,neptuneT);
 		neptuneTG.addChild(neptune.getCelestialBody());
 		neptuneTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
@@ -306,13 +307,10 @@ public class SolarSystem extends JFrame {
 //		rotTG3 = new TransformGroup(t3);
 		//****End Rotation3***
 		
-	
-//		BranchGroup planets = new BranchGroup();
-//		planets.addChild(mercuryTG);
-//		planets.addChild(venusTG);
-//		planets.addChild(earthTG);
-//		planets.addChild(marsTG);
-//		planets.addChild(jupiterTG);
+		Rotation r4 = new Rotation(bounds, false);
+		
+		Rotation r5 = new Rotation(bounds, false);
+
 
 //		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes
@@ -321,6 +319,8 @@ public class SolarSystem extends JFrame {
 		sunTG.addChild(rotTG1);
 		rotTG1.addChild(rotTG2);
 		rotTG2.addChild(rotTG3);
+		rotTG3.addChild(r4.getRotTG());
+		r4.getRotTG().addChild(r5.getRotTG());
 		
 		rotTG1.addChild(mercuryTG);
 		rotTG1.addChild(rotator1);
@@ -330,6 +330,7 @@ public class SolarSystem extends JFrame {
 		
 		rotTG3.addChild(earthTG);
 		rotTG3.addChild(rotator3);
+		r4.getRotTG().addChild(marsTG);
 //		rotTG0.addChild(rotator0);
 		
 //		rotTG0.addChild(rotTG2);

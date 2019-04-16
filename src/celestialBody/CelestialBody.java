@@ -134,7 +134,7 @@ public class CelestialBody {
 		this.color = color;
 		cAttributes.setColor(color);
 		appearance.setColoringAttributes(cAttributes);
-		celestialBody.setAppearance(appearance);
+		this.setAppearance(appearance);
 	}
 
 	/**
@@ -151,6 +151,8 @@ public class CelestialBody {
 	 */
 	public void setcAttributes(ColoringAttributes cAttributes) {
 		this.cAttributes = cAttributes;
+		appearance.setColoringAttributes(cAttributes);
+		this.setAppearance(appearance);
 	}
 	
 }
