@@ -19,6 +19,7 @@ import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.ImageComponent3D;
 import javax.media.j3d.Material;
 import javax.media.j3d.PointLight;
+import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.TexCoordGeneration;
 import javax.media.j3d.Texture;
@@ -164,12 +165,31 @@ public class SolarSystem extends JFrame {
 		//creates the bound of the universe
 		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0), 10000.0);
 		TextureLoader textureLoader = new TextureLoader("src/textures/staryBackground.jpg", null);
-		Background bgImage = new Background(textureLoader.getImage());
-		bgImage.setApplicationBounds(bounds);
+//		Background bgImage = new Background(textureLoader.getImage());
+//		bgImage.setApplicationBounds(bounds);
 		
+		
+		Appearance app = new Appearance();
+		Texture2D texture = (Texture2D) textureLoader.getTexture();
+		app.setTexture(texture);
+		
+		PolygonAttributes poly = new PolygonAttributes();
+		poly.setCullFace(PolygonAttributes.CULL_NONE);
+		poly.setBackFaceNormalFlip(true);
+		app.setPolygonAttributes(poly);
+		
+		Sphere skySphere = new Sphere(20.0f,Sphere.GENERATE_NORMALS_INWARD|Sphere.GENERATE_TEXTURE_COORDS, 62, app);		
+		
+		BranchGroup skyBranch = new BranchGroup();
+		
+		skyBranch.addChild(skySphere);
+		
+		Background bgImage = new Background(skyBranch);
+		bgImage.setApplicationBounds(bounds);
+		bgImage.setGeometry(skyBranch);
 		//single branch group
 		BranchGroup objRoot = new BranchGroup();
-		objRoot.addChild(bgImage);
+//		objRoot.addChild(bgImage);
 		
 		
 		//create 3D shapes and appearances
@@ -304,6 +324,7 @@ public class SolarSystem extends JFrame {
 		objRoot.addChild(r0.getRotTG());
 		r0.getRotTG().addChild(sunTG);
 		sunTG.addChild(r1.getRotTG());
+		sunTG.addChild(skyBranch);
 		r1.getRotTG().addChild(r2.getRotTG());
 		r2.getRotTG().addChild(r3.getRotTG());
 		r3.getRotTG().addChild(r4.getRotTG());
