@@ -303,22 +303,23 @@ public class SolarSystem extends JFrame {
 		//cube 1 translated -5 along z axis
 		objRoot.addChild(r0.getRotTG());
 		r0.getRotTG().addChild(sunTG);
-		sunTG.addChild(rotTG1);
-		rotTG1.addChild(rotTG2);
-		rotTG2.addChild(rotTG3);
-		rotTG3.addChild(r4.getRotTG());
+		sunTG.addChild(r1.getRotTG());
+		r1.getRotTG().addChild(r2.getRotTG());
+		r2.getRotTG().addChild(r3.getRotTG());
+		r3.getRotTG().addChild(r4.getRotTG());
 		r4.getRotTG().addChild(r5.getRotTG());
+		r5.getRotTG().addChild(r6.getRotTG());
+		r6.getRotTG().addChild(r7.getRotTG());
+		r7.getRotTG().addChild(r8.getRotTG());
 		
-		rotTG1.addChild(mercuryTG);
-		rotTG1.addChild(rotator1);
-		
-		rotTG2.addChild(venusTG);
-		rotTG2.addChild(rotator2);
-		
-		rotTG3.addChild(earthTG);
-		rotTG3.addChild(rotator3);
+		r1.getRotTG().addChild(mercuryTG);
+		r2.getRotTG().addChild(venusTG);
+		r3.getRotTG().addChild(earthTG);
 		r4.getRotTG().addChild(marsTG);
-
+		r5.getRotTG().addChild(jupiterTG);
+		r6.getRotTG().addChild(saturnTG);
+		r7.getRotTG().addChild(uranusTG);
+		r8.getRotTG().addChild(neptuneTG);
 			
 		sunTG.addChild(sun.getCelestialBody());
 		

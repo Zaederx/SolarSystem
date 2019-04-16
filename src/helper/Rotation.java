@@ -36,9 +36,9 @@ public class Rotation {
 		if (tilt) {
 			tilt();
 		} else {
-		rotTG = new TransformGroup(t);
+		
 		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		rotTG.addChild(rotator);
+		rotTG.addChild(rotator);System.out.println("rotator set");
 		}
 	}
 	
