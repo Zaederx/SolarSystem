@@ -89,7 +89,7 @@ public class SolarSystem extends JFrame {
 		Vector3f translate = new Vector3f();
 		Transform3D T3D = new Transform3D();
 		//move along z axis by 25.0f ("move away from the screen")
-		translate.set(-0.5f, 0.3f, 2f);
+		translate.set(-0.5f, 0.3f, 10f);
 //		translate.angle(new Vector3f(45.0f, 30.0f,30.0f));
 		
 //		Transform3D t = new Transform3D();
@@ -178,7 +178,7 @@ public class SolarSystem extends JFrame {
 		poly.setBackFaceNormalFlip(true);
 		app.setPolygonAttributes(poly);
 		
-		Sphere skySphere = new Sphere(20.0f,Sphere.GENERATE_NORMALS_INWARD|Sphere.GENERATE_TEXTURE_COORDS, 62, app);		
+		Sphere skySphere = new Sphere(100.0f,Sphere.GENERATE_NORMALS_INWARD|Sphere.GENERATE_TEXTURE_COORDS, 62, app);		
 		
 		BranchGroup skyBranch = new BranchGroup();
 		
