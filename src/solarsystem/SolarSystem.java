@@ -88,7 +88,7 @@ public class SolarSystem extends JFrame {
 		Vector3f translate = new Vector3f();
 		Transform3D T3D = new Transform3D();
 		//move along z axis by 25.0f ("move away from the screen")
-		translate.set(0.0f, 0.0f, 40.0f);
+		translate.set(-0.5f, 0.3f, 2f);
 //		translate.angle(new Vector3f(45.0f, 30.0f,30.0f));
 		
 //		Transform3D t = new Transform3D();
@@ -378,6 +378,7 @@ public class SolarSystem extends JFrame {
 		//Translate Behaviour
 		MouseTranslate behaviourTrans = new MouseTranslate();
 		behaviourTrans.setTransformGroup(r0.getRotTG());
+		behaviourTrans.setFactor(0.006);//0.006 makes mouse translation smooth at such as current universe scale
 		objRoot.addChild(behaviourTrans);
 		behaviourTrans.setSchedulingBounds(bounds);
 		

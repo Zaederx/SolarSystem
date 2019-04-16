@@ -73,7 +73,7 @@ public class Rotation {
 	public void tilt() {
 		Transform3D t = new Transform3D();
 		t.setScale(new Vector3d(2.0,2.0,2.0));
-		t.setTranslation(new Vector3d(0.0,0.0,-5));
+		t.setTranslation(new Vector3d(0.0,0.0,-0.5));
 		Transform3D helperT3D3 = new Transform3D();
 		helperT3D3.rotZ(Math.PI/6);
 		t.mul(helperT3D3);
