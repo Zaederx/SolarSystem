@@ -255,16 +255,7 @@ public class SolarSystem extends JFrame {
 		RotationInterpolator rotator1 = new RotationInterpolator(rotAlpha1, rotTG1, yAxis, 0.0f, (float) Math.PI * (2.0f));
 		rotator1.setSchedulingBounds(bounds);	
 		
-//		Transform3D t1 = new Transform3D();
-//		t1.setScale(new Vector3d(2.0,2.0,2.0));
-//		t1.setTranslation(new Vector3d(0.0,0.0,-5));
-//		Transform3D helperT3D = new Transform3D();
-//		helperT3D.rotZ(Math.PI/6);
-//		t1.mul(helperT3D);
-//		helperT3D.rotX(Math.PI/4);//rotation about X tilts it forward or backward
-//		t1.mul(helperT3D);
-//		rotTG1 = new TransformGroup(t1);
-		//*****Rotation*** END
+
 		
 		//*****Rotation2*********
 		TransformGroup rotTG2 = new TransformGroup();
@@ -274,17 +265,7 @@ public class SolarSystem extends JFrame {
 		RotationInterpolator rotator2 = new RotationInterpolator(rotAlpha2, rotTG2, yAxis2,0.0f, (float) Math.PI * 4.0f);
 		rotator2.setSchedulingBounds(bounds);
 		
-//		Transform3D t2 = new Transform3D();
-//		t2.setScale(new Vector3d(2.0,2.0,2.0));
-//		t2.setTranslation(new Vector3d(0.0,0.0,-5));
-//		Transform3D helperT3D2 = new Transform3D();
-//		helperT3D2.rotZ(Math.PI/6);
-//		t2.mul(helperT3D2);
-//		helperT3D2.rotX(Math.PI/4);//rotation about X tilts it forward or backward
-//		t2.mul(helperT3D2);
-//		rotTG2 = new TransformGroup(t2);
-		//****Rotation2******
-		
+
 		
 //		***Rotation3
 		TransformGroup rotTG3 = new TransformGroup();
@@ -293,16 +274,7 @@ public class SolarSystem extends JFrame {
 		Transform3D yAxis3 = new Transform3D();
 		RotationInterpolator rotator3 = new RotationInterpolator(rotAlpha3, rotTG3, yAxis3, 0.0f, (float) Math.PI*2.0f);
 		rotator3.setSchedulingBounds(bounds);
-//		Transform3D t3 = new Transform3D();
-//		t3.setScale(new Vector3d(2.0,2.0,2.0));
-//		t3.setTranslation(new Vector3d(0.0,0.0,-5));
-//		Transform3D helperT3D3 = new Transform3D();
-//		helperT3D3.rotZ(Math.PI/6);
-//		t3.mul(helperT3D3);
-//		helperT3D3.rotX(Math.PI/4);//rotation about X tilts it forward or backward
-//		t3.mul(helperT3D3);
-//		rotTG3 = new TransformGroup(t3);
-//		****End Rotation3**
+
 		Rotation r0, r1, r2, r3, r4, r5 ,r6, r7, r8, r9;
 		r0 = new Rotation(bounds, true);
 		r1 = new Rotation(bounds, false);
@@ -346,19 +318,7 @@ public class SolarSystem extends JFrame {
 		rotTG3.addChild(earthTG);
 		rotTG3.addChild(rotator3);
 		r4.getRotTG().addChild(marsTG);
-//		rotTG0.addChild(rotator0);
-		
-//		rotTG0.addChild(rotTG2);
-			
-//			rotTG2.addChild(venusTG);
-//			rotTG2.addChild(rotator2);
-			
 
-//			rotTG1.addChild(venusTG);
-
-//				rotTG2.addChild(rotTG3);
-
-//					rotTG3.addChild(mars.getCelestialBody());
 			
 		sunTG.addChild(sun.getCelestialBody());
 		
@@ -372,13 +332,14 @@ public class SolarSystem extends JFrame {
 		//MouseRotate behaviour node
 		MouseZoom behaviourZoom = new MouseZoom();
 		behaviourZoom.setTransformGroup(r0.getRotTG());
+		behaviourZoom.setFactor(0.01);//0.01 makes mouse translation smooth as curren universe scale.
 		objRoot.addChild(behaviourZoom);
 		behaviourZoom.setSchedulingBounds(bounds);
 		
 		//Translate Behaviour
 		MouseTranslate behaviourTrans = new MouseTranslate();
 		behaviourTrans.setTransformGroup(r0.getRotTG());
-		behaviourTrans.setFactor(0.006);//0.006 makes mouse translation smooth at such as current universe scale
+		behaviourTrans.setFactor(0.006);//0.006 makes mouse translation smooth at such as current universe scale.
 		objRoot.addChild(behaviourTrans);
 		behaviourTrans.setSchedulingBounds(bounds);
 		
@@ -386,29 +347,6 @@ public class SolarSystem extends JFrame {
 		return objRoot;
 	}
 	
-//	/**
-//	 * 
-//	 * @param helper
-//	 * @param rotation
-//	 * @param rotationAlpha
-//	 * @param axis
-//	 * @param bounds
-//	 * @return
-//	 */
-//	public TransformGroup rotationTG(RotationInterpolator helper, float rotation, Alpha rotationAlpha, Transform3D axis,  BoundingSphere bounds ) {
-//		TransformGroup rotTG = new TransformGroup();
-//		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-//		helper.setSchedulingBounds(bounds);
-//		Transform3D t = new Transform3D();
-//		t.setScale(new Vector3d(2.0,2.0,2.0));
-//		t.setTranslation(new Vector3d(0.0,0.0,-5));
-//		Transform3D helperT3D = new Transform3D();
-//		helperT3D.rotZ(Math.PI);
-//		t.mul(helperT3D);
-//		t.rotX(Math.PI/2);
-//		
-//		return rotTG;
-//	}
 
 
 	/**
@@ -457,25 +395,7 @@ public class SolarSystem extends JFrame {
 
 			return planetTG;
 }
-	/**
-	 * Creates a new celestialBody (planet, moon or star).
-	 * @param sphereSize
-	 * @param red
-	 * @param green
-	 * @param blue
-	 * @return
-	 */
-	public Sphere celestialBody(float sphereSize, float red, float green, float blue) {
-		Sphere celestialBody = new Sphere(sphereSize);
-		Appearance appearance = new Appearance();
-		Color3f color = new Color3f(red,green,blue);
-		ColoringAttributes cAttributes = new ColoringAttributes();
-		cAttributes.setColor(color);
-		appearance.setColoringAttributes(cAttributes);
-		celestialBody.setAppearance(appearance);
-		
-		return celestialBody;
-	}
+
 	
 	/**
 	 * 
