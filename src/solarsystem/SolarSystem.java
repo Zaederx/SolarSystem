@@ -289,7 +289,7 @@ public class SolarSystem extends JFrame {
 		//****Rotation2******
 		
 		
-		//***Rotation3
+//		***Rotation3
 		TransformGroup rotTG3 = new TransformGroup();
 		rotTG3.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		Alpha rotAlpha3 = new Alpha(-1,18000);
@@ -305,17 +305,25 @@ public class SolarSystem extends JFrame {
 //		helperT3D3.rotX(Math.PI/4);//rotation about X tilts it forward or backward
 //		t3.mul(helperT3D3);
 //		rotTG3 = new TransformGroup(t3);
-		//****End Rotation3***
-		
-		Rotation r4 = new Rotation(bounds, false);
-		
-		Rotation r5 = new Rotation(bounds, false);
+//		****End Rotation3**
+		Rotation r0, r1, r2, r3, r4, r5 ,r6, r7, r8, r9;
+		r0 = new Rotation(bounds, true);
+		r1 = new Rotation(bounds, false);
+		r2 = new Rotation(bounds, false);
+		r3 = new Rotation(bounds, false);
+		r4 = new Rotation(bounds, false);
+		r5 = new Rotation(bounds, false);
+		r6 = new Rotation(bounds, false);
+		r7 = new Rotation(bounds, false);
+		r8 = new Rotation(bounds, false);
+		r9 = new Rotation(bounds, false);
 
 
 //		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
-		objRoot.addChild(sunTG);
+		objRoot.addChild(r0.getRotTG());
+		r0.getRotTG().addChild(sunTG);
 		sunTG.addChild(rotTG1);
 		rotTG1.addChild(rotTG2);
 		rotTG2.addChild(rotTG3);
