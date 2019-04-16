@@ -147,24 +147,52 @@ public class SolarSystem extends JFrame {
 		amLight.setBounds(bounds);
 		bgLight.addChild(amLight);
 		
-//		//directionaLight
-//		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
-//		Vector3f direction = new Vector3f(-1.0f,0.0f,-0.5f);
-//		DirectionalLight light = new DirectionalLight(lightColor,direction);
+
 		
-		//light works only within set bounds
-//		light.setInfluencingBounds(bounds);
-//		bgLight.addChild(light);
-		
-//		Vector3f direction2 = new Vector3f(1.0f,-1.0f,0.5f);
-		Vector3f direction2 = new Vector3f(0.0f,0.0f,0.0f); // light comes side on
-//		DirectionalLight light2 = new DirectionalLight(lightColor,direction2);
-		PointLight pointLight = new PointLight();
-//		light2.setInfluencingBounds(bounds);
-		bgLight.addChild(pointLight);
+	
 		
 		su.addBranchGraph(bgLight);
 //		su.getViewer().getView().setLocalEyeLightingEnable(false);
+	}
+	
+	/**
+	 * Changes the direction of the light.
+	 * Instead of the sun ilumminating the scene,
+	 * an ethereal light from the galaxy lights the scene from the left.
+	 * @param su
+	 */
+	public void addSideLightLeft(SimpleUniverse su) {
+		BranchGroup bgLight = new BranchGroup();
+		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
+		//*****Light2
+				//light works only within set bounds	
+		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
+		Vector3f direction2 = new Vector3f(1.0f,-1.0f,0.5f);
+//		Vector3f direction2 = new Vector3f(0.0f,0.0f,0.0f); // light comes side on
+		DirectionalLight light2 = new DirectionalLight(lightColor,direction2);
+		//***Light 2 End
+		light2.setInfluencingBounds(bounds);
+		bgLight.addChild(light2);
+		
+		su.addBranchGraph(bgLight);
+	}
+	
+	/**
+	 * Changes the direction of the light.
+	 * Instead of the sun ilumminating the scene,
+	 * an ethereal light from the galaxy lights the scene fomr the right.
+	 */
+	public void addSideLightRight() {
+		BranchGroup bgLight = new BranchGroup();
+		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
+//		//directionaLight
+		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
+		Vector3f direction = new Vector3f(-1.0f,0.0f,-0.5f);
+		DirectionalLight light = new DirectionalLight(lightColor,direction);
+		
+		light.setInfluencingBounds(bounds);
+		bgLight.addChild(light);
+
 	}
 	
 	/**
@@ -187,7 +215,7 @@ public class SolarSystem extends JFrame {
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		
 		//create 3D shapes and appearances
-		Sun sun = new Sun(bounds);
+		Sun sun = new Sun(bounds, true);
 		Mercury mercury = new Mercury();
 		Venus venus = new Venus();
 		Earth earth = new Earth();

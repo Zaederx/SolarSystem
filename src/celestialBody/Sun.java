@@ -26,15 +26,20 @@ public class Sun extends CelestialBody{
 	private static float defaultGreen = 0f;
 	private static float defaultBlue = 0f;
 	static String texImage = "src/textures/sun.jpg";
-	public Sun (BoundingSphere bounds) {
+	public Sun (BoundingSphere bounds, boolean emit) {
 		super(defaultSize,defaultRed,defaultGreen, defaultBlue);
 		setTexture(texImage);
+		if (emit) {
 		emitLight(bounds);
+		}
 	}
 	
 	
 	
-	
+	/**
+	 * Set sets the sun to emit light within certain bounds.
+	 * @param bounds - the bounds of the light
+	 */
 	public void emitLight (BoundingSphere bounds) {
 		BranchGroup sunLight = new BranchGroup();
 //		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
