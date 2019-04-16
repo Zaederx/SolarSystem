@@ -189,7 +189,7 @@ public class SolarSystem extends JFrame {
 		
 		//transform group for the branch group
 		Transform3D sunT = new Transform3D();
-		TransformGroup sunTG = createTG(0.0,0.0,-1, 0.1,0.1,0.1, sunT);
+		TransformGroup sunTG = createTG(0.0,0.0,0, 0.1,0.1,0.1, sunT);
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		Transform3D mercuryT = new Transform3D();
