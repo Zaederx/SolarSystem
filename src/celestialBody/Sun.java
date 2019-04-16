@@ -26,24 +26,26 @@ public class Sun extends CelestialBody{
 	private static float defaultGreen = 0f;
 	private static float defaultBlue = 0f;
 	static String texImage = "src/textures/sun.jpg";
-	public Sun () {
+	public Sun (BoundingSphere bounds) {
 		super(defaultSize,defaultRed,defaultGreen, defaultBlue);
 		setTexture(texImage);
-		emitLight();
+		emitLight(bounds);
 	}
 	
 	
 	
 	
-	public void emitLight () {
+	public void emitLight (BoundingSphere bounds) {
 		BranchGroup sunLight = new BranchGroup();
-		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
+//		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
 		
 		//set up light in the scene
 		Color3f pointLColor = new Color3f(0.6f,0.6f,0.6f);
 		Point3f position = new Point3f();
 		Point3f attenuation = new Point3f(1,0,0);
 		PointLight pointLight = new PointLight(true, pointLColor, position,attenuation);
+		pointLight.setEnable(true);
+		pointLight.setInfluencingBounds(bounds);
 		pointLight.setBounds(bounds);
 		sunLight.addChild(pointLight);
 		
@@ -61,7 +63,8 @@ public class Sun extends CelestialBody{
 //		light2.setInfluencingBounds(bounds);
 //		sunLight.addChild(light2);
 		
-		getCelestialBody().addChild(sunLight);;
+		getCelestialBody().addChild(sunLight);
+		
 //		su.addBranchGraph(bgLight);
 	}
 }

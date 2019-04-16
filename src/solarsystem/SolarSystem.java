@@ -18,6 +18,7 @@ import javax.media.j3d.DirectionalLight;
 import javax.media.j3d.ImageComponent2D;
 import javax.media.j3d.ImageComponent3D;
 import javax.media.j3d.Material;
+import javax.media.j3d.PointLight;
 import javax.media.j3d.RotationInterpolator;
 import javax.media.j3d.TexCoordGeneration;
 import javax.media.j3d.Texture;
@@ -30,6 +31,7 @@ import javax.swing.JFrame;
 import javax.vecmath.Color3f;
 import javax.vecmath.Matrix4d;
 import javax.vecmath.Point3d;
+import javax.vecmath.Point3f;
 import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
@@ -125,7 +127,7 @@ public class SolarSystem extends JFrame {
 		BranchGroup scene = createSceneGraph();
 		simpUniv.addBranchGraph(scene);
 		
-//		addLight(simpUniv);
+		addLight(simpUniv);
 		setTitle("Step 1: A simple cube");
 		setSize(700,700);
 		setVisible(true);
@@ -145,21 +147,24 @@ public class SolarSystem extends JFrame {
 		amLight.setBounds(bounds);
 		bgLight.addChild(amLight);
 		
-		//directionaLight
-		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
-		Vector3f direction = new Vector3f(-1.0f,0.0f,-0.5f);
-		DirectionalLight light = new DirectionalLight(lightColor,direction);
+//		//directionaLight
+//		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
+//		Vector3f direction = new Vector3f(-1.0f,0.0f,-0.5f);
+//		DirectionalLight light = new DirectionalLight(lightColor,direction);
 		
 		//light works only within set bounds
-		light.setInfluencingBounds(bounds);
-		bgLight.addChild(light);
+//		light.setInfluencingBounds(bounds);
+//		bgLight.addChild(light);
 		
-		Vector3f direction2 = new Vector3f(1.0f,-1.0f,0.5f);
-		DirectionalLight light2 = new DirectionalLight(lightColor,direction2);
-		light2.setInfluencingBounds(bounds);
-		bgLight.addChild(light2);
+//		Vector3f direction2 = new Vector3f(1.0f,-1.0f,0.5f);
+		Vector3f direction2 = new Vector3f(0.0f,0.0f,0.0f); // light comes side on
+//		DirectionalLight light2 = new DirectionalLight(lightColor,direction2);
+		PointLight pointLight = new PointLight();
+//		light2.setInfluencingBounds(bounds);
+		bgLight.addChild(pointLight);
 		
 		su.addBranchGraph(bgLight);
+//		su.getViewer().getView().setLocalEyeLightingEnable(false);
 	}
 	
 	/**
@@ -182,7 +187,7 @@ public class SolarSystem extends JFrame {
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		
 		//create 3D shapes and appearances
-		Sun sun = new Sun();
+		Sun sun = new Sun(bounds);
 		Mercury mercury = new Mercury();
 		Venus venus = new Venus();
 		Earth earth = new Earth();
