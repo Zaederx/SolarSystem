@@ -1,4 +1,4 @@
-package rotator;
+package helper;
 
 import javax.media.j3d.Alpha;
 import javax.media.j3d.BoundingSphere;

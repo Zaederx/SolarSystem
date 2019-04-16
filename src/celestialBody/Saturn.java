@@ -19,7 +19,7 @@ public class Saturn extends CelestialBody{
 	static float defaultBlue = 0f;
 	static Appearance appearance = new Appearance();
 	static String texImage = "src/textures/saturn.jpg";
-	//Create box and add the appearance
+	//Create box and add the whiteApp
 	Cylinder planetaryRing;
 
 	public Saturn () {
@@ -38,7 +38,7 @@ public class Saturn extends CelestialBody{
 		ImageComponent2D image = loader.getScaledImage(256,256);
 		Texture2D texture = new Texture2D(Texture2D.BASE_LEVEL, Texture2D.RGB, image.getWidth(), image.getHeight());
 		appearance.setTexture(texture);
-		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, appearance);
+		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, appearance);//(how thin/thick, how high, whiteApp)
 		
 	}
 	

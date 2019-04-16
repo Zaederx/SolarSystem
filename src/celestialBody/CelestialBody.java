@@ -80,7 +80,7 @@ public class CelestialBody {
 			TexCoordGeneration.TEXTURE_COORDINATE_3);
 	
 	appearance.setTexCoordGeneration(tcg);
-//	getCelestialBody().setAppearance(appearance);
+//	getCelestialBody().setAppearance(whiteApp);
 	setAppearance(appearance);
 	}
 	
@@ -101,7 +101,7 @@ public class CelestialBody {
 	}
 	
 	/**
-	 * Getter for appearance.
+	 * Getter for whiteApp.
 	 * @return
 	 */
 	public Appearance getAppearance() {
@@ -109,8 +109,8 @@ public class CelestialBody {
 	}
 
 	/**
-	 * Setter for appearance.
-	 * @param appearance
+	 * Setter for whiteApp.
+	 * @param whiteApp
 	 */
 	public void setAppearance(Appearance appearance) {
 		this.appearance = appearance;

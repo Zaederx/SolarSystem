@@ -56,7 +56,7 @@ import celestialBody.Saturn;
 import celestialBody.Sun;
 import celestialBody.Uranus;
 import celestialBody.Venus;
-import rotator.Rotation;
+import helper.Rotation;
 
 public class SolarSystem extends JFrame {
 
@@ -101,27 +101,7 @@ public class SolarSystem extends JFrame {
 		cameraTG.setTransform(T3D);
 		
 		
-//		//***Spaceship end***
-//		//*****Rotation*****
-//		
-//		Alpha rotAlpha1 = new Alpha(-1, 18000);
-//		Transform3D yAxis = new Transform3D();
-//		
-//		//0.0F controls how much it spirals to the center (how offeset it is to spiral to the center)
-//		//(float) Math.PI variable controls how much of a rotation 2.0f = full rotation
-//		RotationInterpolator rotator1 = new RotationInterpolator(rotAlpha1, rotTG1, yAxis, 0.0f, (float) Math.PI * (2.0f));
-//		rotator1.setSchedulingBounds(bounds);	
-//		
-//		
-//		Transform3D t = new Transform3D();
-//		t.setScale(new Vector3d(2.0,2.0,2.0));
-//		t.setTranslation(new Vector3d(0.0,0.0,-5));
-//		Transform3D helperT3D = new Transform3D();
-//		helperT3D.rotZ(Math.PI/6);
-//		t.mul(helperT3D);
-//		helperT3D.rotX(Math.PI/4);//rotation about X tilts it forward or backward
-//		t.mul(helperT3D);
-////		TransformGroup rotTG1 = new TransformGroup(t);
+
 		
 		//Add scene to Universe
 		BranchGroup scene = createSceneGraph();
@@ -351,7 +331,10 @@ public class SolarSystem extends JFrame {
 		r8 = new Rotation(bounds, false);
 		r9 = new Rotation(bounds, false);
 
+		Cylinder c1, c1b, c2, c2b, c3, c3b, c4, c4b, c5,c5b ,c6, c6b, c7, c7b, c8, c8b ,c9, c9b;
+		
 
+//		c1 = new Cylinder(0.8,0.1,);
 //		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes
 		//cube 1 translated -5 along z axis
@@ -391,19 +374,19 @@ public class SolarSystem extends JFrame {
 		
 		//Create rotation behaviour
 		MouseRotate behaviourRot = new MouseRotate();
-		behaviourRot.setTransformGroup(sunTG);
+		behaviourRot.setTransformGroup(r0.getRotTG());
 		objRoot.addChild(behaviourRot);
 		behaviourRot.setSchedulingBounds(bounds);
 		
 		//MouseRotate behaviour node
 		MouseZoom behaviourZoom = new MouseZoom();
-		behaviourZoom.setTransformGroup(sunTG);
+		behaviourZoom.setTransformGroup(r0.getRotTG());
 		objRoot.addChild(behaviourZoom);
 		behaviourZoom.setSchedulingBounds(bounds);
 		
 		//Translate Behaviour
 		MouseTranslate behaviourTrans = new MouseTranslate();
-		behaviourTrans.setTransformGroup(sunTG);
+		behaviourTrans.setTransformGroup(r0.getRotTG());
 		objRoot.addChild(behaviourTrans);
 		behaviourTrans.setSchedulingBounds(bounds);
 		
@@ -413,17 +396,17 @@ public class SolarSystem extends JFrame {
 	
 //	/**
 //	 * 
-//	 * @param rotator
+//	 * @param helper
 //	 * @param rotation
 //	 * @param rotationAlpha
 //	 * @param axis
 //	 * @param bounds
 //	 * @return
 //	 */
-//	public TransformGroup rotationTG(RotationInterpolator rotator, float rotation, Alpha rotationAlpha, Transform3D axis,  BoundingSphere bounds ) {
+//	public TransformGroup rotationTG(RotationInterpolator helper, float rotation, Alpha rotationAlpha, Transform3D axis,  BoundingSphere bounds ) {
 //		TransformGroup rotTG = new TransformGroup();
 //		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-//		rotator.setSchedulingBounds(bounds);
+//		helper.setSchedulingBounds(bounds);
 //		Transform3D t = new Transform3D();
 //		t.setScale(new Vector3d(2.0,2.0,2.0));
 //		t.setTranslation(new Vector3d(0.0,0.0,-5));

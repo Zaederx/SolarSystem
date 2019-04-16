@@ -26,6 +26,12 @@ public class Sun extends CelestialBody{
 	private static float defaultGreen = 0f;
 	private static float defaultBlue = 0f;
 	static String texImage = "src/textures/sun.jpg";
+	
+	/**
+	 * Consturctor for 
+	 * @param bounds
+	 * @param emit
+	 */
 	public Sun (BoundingSphere bounds, boolean emit) {
 		super(defaultSize,defaultRed,defaultGreen, defaultBlue);
 		setTexture(texImage);
