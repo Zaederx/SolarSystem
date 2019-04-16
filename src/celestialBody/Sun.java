@@ -21,7 +21,7 @@ import javax.vecmath.Vector3f;
 import com.sun.j3d.utils.image.TextureLoader;
 
 public class Sun extends CelestialBody{
-	private static float defaultSize = .5f;
+	private static float defaultSize = 0.1f;
 	private static float defaultRed = 0f;
 	private static float defaultGreen = 0f;
 	private static float defaultBlue = 0f;
@@ -32,12 +32,14 @@ public class Sun extends CelestialBody{
 	 * @param bounds
 	 * @param emit
 	 */
-	public Sun (BoundingSphere bounds, boolean emit) {
+	public Sun (BoundingSphere bounds, boolean emit, boolean textured) {
 		super(defaultSize,defaultRed,defaultGreen, defaultBlue);
-		setTexture(texImage);
 		if (emit) {
 		emitLight(bounds);
 		}
+		if (textured) {
+			setTexture(texImage);
+			}
 	}
 	
 	

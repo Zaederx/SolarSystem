@@ -11,14 +11,16 @@ import com.sun.j3d.utils.image.TextureLoader;
 
 public class Uranus extends CelestialBody {
 
-	static float defaultSize = 0.5f;
+	static float defaultSize = 0.2f;
 	static float defaultRed = 1f;
 	static float defaultGreen = 0f;
 	static float defaultBlue = 0f;
 	static String texImage = "src/textures/uranus.jpg";
-	public Uranus () {
+	public Uranus (boolean textured) {
 		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
+		if (textured) {
 		setTexture(texImage);
+		}
 	}
 	
 	

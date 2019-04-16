@@ -80,7 +80,7 @@ public class SolarSystem extends JFrame {
 		myCanvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 		getContentPane().add("Center", myCanvas3D);
 		SimpleUniverse simpUniv = new SimpleUniverse(myCanvas3D);
-		simpUniv.getViewingPlatform().setNominalViewingTransform();
+//		simpUniv.getViewingPlatform().setNominalViewingTransform();
 		//viewing platform
 		TransformGroup cameraTG = simpUniv.getViewingPlatform().getViewPlatformTransform();
 		
@@ -88,7 +88,7 @@ public class SolarSystem extends JFrame {
 		Vector3f translate = new Vector3f();
 		Transform3D T3D = new Transform3D();
 		//move along z axis by 25.0f ("move away from the screen")
-		translate.set(0.0f, 0.0f, 25.0f);
+		translate.set(0.0f, 0.0f, 40.0f);
 //		translate.angle(new Vector3f(45.0f, 30.0f,30.0f));
 		
 //		Transform3D t = new Transform3D();
@@ -107,33 +107,14 @@ public class SolarSystem extends JFrame {
 		BranchGroup scene = createSceneGraph();
 		simpUniv.addBranchGraph(scene);
 		
-		addLight(simpUniv);
+		
+//		addSideLightLeft(simpUniv);
 		setTitle("Step 1: A simple cube");
 		setSize(700,700);
 		setVisible(true);
 	}
 
-	/**
-	 * Adds light to the scene.
-	 * @param su - universe you want to add light to
-	 */
-	public void addLight(SimpleUniverse su) {
-		BranchGroup bgLight = new BranchGroup();
-		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
-		
-		//set up light in the scene
-		Color3f ambientLColor = new Color3f(0.6f,0.6f,0.6f);
-		AmbientLight amLight = new AmbientLight(ambientLColor);
-		amLight.setBounds(bounds);
-		bgLight.addChild(amLight);
-		
 
-		
-	
-		
-		su.addBranchGraph(bgLight);
-//		su.getViewer().getView().setLocalEyeLightingEnable(false);
-	}
 	
 	/**
 	 * Changes the direction of the light.
@@ -189,48 +170,51 @@ public class SolarSystem extends JFrame {
 		//single branch group
 		BranchGroup objRoot = new BranchGroup();
 		objRoot.addChild(bgImage);
-		//transform group for the branch group
-		TransformGroup sunTG = new TransformGroup();
-		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		
 		
 		//create 3D shapes and appearances
-		Sun sun = new Sun(bounds, true);
-		Mercury mercury = new Mercury();
-		Venus venus = new Venus();
-		Earth earth = new Earth();
-		Mars mars = new Mars();
-		Jupiter jupiter = new Jupiter();
-		Saturn saturn = new Saturn();
-		Uranus uranus = new Uranus();
-		Neptune neptune = new Neptune();
+		Sun sun = new Sun(bounds, true, true);
+		Mercury mercury = new Mercury(true);
+		Venus venus = new Venus(true);
+		Earth earth = new Earth(true);
+		Mars mars = new Mars(true);
+		Jupiter jupiter = new Jupiter(true);
+		Saturn saturn = new Saturn(true);
+		Uranus uranus = new Uranus(true);
+		Neptune neptune = new Neptune(true);
 		
 		
 		
 		//TransformGroup
+		
+		//transform group for the branch group
+		Transform3D sunT = new Transform3D();
+		TransformGroup sunTG = createTG(0.0,0.0,-1, 0.1,0.1,0.1, sunT);
+		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
 		Transform3D mercuryT = new Transform3D();
-		TransformGroup mercuryTG = createTG(0.0,0.0,-2, 2.0,2.0,2.0,mercuryT);
+		TransformGroup mercuryTG = createTG(0.0,0.0,-1, 2.0,2.0,2.0,mercuryT);
 		mercuryTG.addChild(mercury.getCelestialBody());
 		mercuryTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D venusT = new Transform3D();
-		TransformGroup venusTG = createTG(0.0,0.0,-4, 2.0,2.0,2.0,venusT);
+		TransformGroup venusTG = createTG(0.0,0.0,-2.5, 2.0,2.0,2.0,venusT);
 		venusTG.addChild(venus.getCelestialBody());
 		venusTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D earthT = new Transform3D();
-		TransformGroup earthTG = createTG(0.0,0.0,-6, 2.0,2.0,2.0,earthT);
+		TransformGroup earthTG = createTG(0.0,0.0,-4, 2.0,2.0,2.0,earthT);
 		earthTG.addChild(earth.getCelestialBody());
 		earthTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D marsT = new Transform3D();
-		TransformGroup marsTG = createTG(0.0,0.0,-10, 2.0,2.0,2.0,marsT);
+		TransformGroup marsTG = createTG(0.0,0.0,-8, 2.0,2.0,2.0,marsT);
 		marsTG.addChild(mars.getCelestialBody());
 		marsTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		
 		Transform3D jupiterT = new Transform3D();
-		TransformGroup jupiterTG = createTG(0.0,0.0,-12, 2.0,2.0,2.0,jupiterT);
+		TransformGroup jupiterTG = createTG(0.0,0.0,-13, 2.0,2.0,2.0,jupiterT);
 		jupiterTG.addChild(jupiter.getCelestialBody());
 		jupiterTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
@@ -331,9 +315,16 @@ public class SolarSystem extends JFrame {
 		r8 = new Rotation(bounds, false);
 		r9 = new Rotation(bounds, false);
 
+		//Creating cyclic rings
 		Cylinder c1, c1b, c2, c2b, c3, c3b, c4, c4b, c5,c5b ,c6, c6b, c7, c7b, c8, c8b ,c9, c9b;
 		
 
+		BranchGroup stars = new BranchGroup();
+		//Star star = new Start();
+		for (int i = 0; i < 100 ; i++ ) {
+			//Star star = new Star();
+//			stars.addChild(star);
+		}
 //		c1 = new Cylinder(0.8,0.1,);
 //		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes

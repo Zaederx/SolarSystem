@@ -11,14 +11,17 @@ import com.sun.j3d.utils.image.TextureLoader;
 
 public class Mars extends CelestialBody {
 
-	static float defaultSize = 0.5f;
+	static float defaultSize = 0.1f;
 	static float defaultRed = 1f;
 	static float defaultGreen = 0f;
 	static float defaultBlue = 0f;
-	static String textImage = "src/textures/mars.jpg";
-	public Mars () {
+	static String texImage = "src/textures/mars.jpg";
+	
+	public Mars (boolean textured) {
 		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
-		setTexture(textImage);
+		if (textured) {
+			setTexture(texImage);
+			}
 	}
 	
 	

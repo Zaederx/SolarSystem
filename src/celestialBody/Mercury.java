@@ -15,14 +15,16 @@ import com.sun.j3d.utils.image.TextureLoader;
  *
  */
 public class Mercury extends CelestialBody{
-		static float defaultSize = 0.5f;
+		static float defaultSize = 0.2f;
 		static float defaultRed = 1f;
 		static float defaultGreen = 0f;
 		static float defaultBlue = 0f;
-		static String textImage = "src/textures/mercury.jpg";
+		static String texImage = "src/textures/mercury.jpg";
 		
-		public Mercury () {
+		public Mercury (boolean textured) {
 			super(defaultSize,defaultRed, defaultGreen, defaultBlue);
-			setTexture(textImage);
+			if (textured) {
+				setTexture(texImage);
+				}
 		}
 }

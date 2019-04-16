@@ -35,6 +35,16 @@ public class CelestialBody {
 	}
 	
 	/**
+	 * Constructor that allows size to be set.
+	 */
+	public  CelestialBody(float sphereSize) {
+		celestialBody = new Sphere(sphereSize);
+		appearance = new Appearance();
+		color = new Color3f();
+		cAttributes = new ColoringAttributes();
+	}
+	
+	/**
 	 * Constructor.
 	 * For case plain colour is used instead of textures.
 	 * Creates a new celestialBody (planet, moon or star).
@@ -52,6 +62,7 @@ public class CelestialBody {
 		cAttributes.setColor(color);
 		appearance.setColoringAttributes(cAttributes);
 		celestialBody.setAppearance(appearance);
+		
 		
 	}
 	
