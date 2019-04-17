@@ -85,6 +85,7 @@ public class CelestialBody {
 	Material material = new Material();
 	material.setShininess(0f);
 	
+	
 	appearance.setMaterial(material);
 	
 	TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.SPHERE_MAP,

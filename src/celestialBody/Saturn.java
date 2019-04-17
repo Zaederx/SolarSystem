@@ -13,23 +13,28 @@ import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.image.TextureLoader;
 
 public class Saturn extends CelestialBody{
-	static float defaultSize = 0.1f;
+	static float defaultSize = .1f;
 	static float defaultRed = 1f;
 	static float defaultGreen = 0f;
 	static float defaultBlue = 0f;
-	static Appearance appearance = new Appearance();
+	static Appearance appearance;
+	static Appearance ringApp;
 	static String texImage = "src/textures/saturn.jpg";
 	//Create box and add the whiteApp
-	Cylinder planetaryRing;
+	static Cylinder planetaryRing;
 
 	public Saturn (boolean textured) {
+		
 		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
+		appearance = new Appearance();
+		ringApp = new Appearance();
+		planetaryRing = new Cylinder();
 		if (textured) {
 			setTexture(texImage);
+			
 			setRing();//default textured ring for saturn
 			}
-		
-		
+	
 	}
 	
 	public Cylinder getPlanetaryRing() {
@@ -41,10 +46,30 @@ public class Saturn extends CelestialBody{
 	 */
 	public void setRing() {
 		TextureLoader loader = new TextureLoader("src/textures/saturn_ring.png",null);
-		ImageComponent2D image = loader.getScaledImage(256,256);
+		ImageComponent2D image = loader.getScaledImage(64,64);
 		Texture2D texture = new Texture2D(Texture2D.BASE_LEVEL, Texture2D.RGB, image.getWidth(), image.getHeight());
-		appearance.setTexture(texture);
-		Cylinder planetaryRing = new Cylinder(0.8f,0.1f, appearance);//(how thin/thick, how high, whiteApp)	
+		texture.setImage(0, image);
+		ringApp = new Appearance();
+		ringApp.setTexture(texture);
+		//(how thin/thick, how high, whiteApp)	
+		TextureAttributes textureAttr = new TextureAttributes();
+		textureAttr.setTextureMode(TextureAttributes.REPLACE);
+		ringApp.setTextureAttributes(textureAttr);
+		
+		Material material = new Material();
+		material.setShininess(0f);
+		
+		
+		ringApp.setMaterial(material);
+		
+		TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.OBJECT_LINEAR,
+				TexCoordGeneration.TEXTURE_COORDINATE_3);
+		
+		ringApp.setTexCoordGeneration(tcg);
+//		getCelestialBody().setAppearance(whiteApp);
+		planetaryRing = new Cylinder(.2f,.01f,ringApp);
+	
+		
 	}
 	
 }

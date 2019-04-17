@@ -26,7 +26,7 @@ public class Rotation {
 	public Rotation (BoundingSphere bounds, boolean tilt) {
 		rotTG = new TransformGroup();
 		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		rotAlpha = new Alpha(-1,18000);
+		rotAlpha = new Alpha(-1,180000);
 		yAxis = new Transform3D();
 		rotator = new RotationInterpolator(rotAlpha, rotTG, yAxis, 0.0f, (float) Math.PI*2.0f);
 		rotator.setSchedulingBounds(bounds);
@@ -36,9 +36,8 @@ public class Rotation {
 		if (tilt) {
 			tilt();
 		} else {
-		
 		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		rotTG.addChild(rotator);System.out.println("rotator set");
+		rotTG.addChild(rotator);
 		}
 	}
 	

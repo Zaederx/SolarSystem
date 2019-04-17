@@ -18,7 +18,7 @@ public class Earth extends CelestialBody{
 	static String texImage = "src/textures/earth.jpg";
 
 	public Earth (boolean textured) {
-		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
+		super(defaultSize);
 		if (textured) {
 			setTexture(texImage);
 			}

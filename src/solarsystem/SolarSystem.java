@@ -81,7 +81,7 @@ public class SolarSystem extends JFrame {
 		myCanvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 		getContentPane().add("Center", myCanvas3D);
 		SimpleUniverse simpUniv = new SimpleUniverse(myCanvas3D);
-//		simpUniv.getViewingPlatform().setNominalViewingTransform();
+		simpUniv.getViewingPlatform().setNominalViewingTransform();
 		//viewing platform
 		TransformGroup cameraTG = simpUniv.getViewingPlatform().getViewPlatformTransform();
 		
@@ -239,8 +239,14 @@ public class SolarSystem extends JFrame {
 		jupiterTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D saturnT = new Transform3D();
+		Transform3D ringT = new Transform3D();
 		TransformGroup saturnTG = createTG(0.0,0.0,-14, 2.0,2.0,2.0,saturnT);
+		TransformGroup ringTG = createTG(0.0,0.0,-14, 0.1,0.1,0.1,ringT);
+		
+//		Cylinder planetaryRing =  new Cylinder(.1f,0.000000000000000000000000000000000001f);
 		saturnTG.addChild(saturn.getCelestialBody());
+//		ringTG.addChild(planetaryRing);
+//		ringTG.addChild(saturn.getPlanetaryRing());
 		saturnTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D uranusT = new Transform3D();
@@ -265,35 +271,7 @@ public class SolarSystem extends JFrame {
 		
 		
 		//***Spaceship end***
-		//*****Rotation*****
-		TransformGroup rotTG1 = new TransformGroup();
-		rotTG1.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		Alpha rotAlpha1 = new Alpha(-1, 18000);
-		Transform3D yAxis = new Transform3D();
-		//0.0F controls how much it spirals to the center (how offeset it is to spiral to the center)
-		//(float) Math.PI variable controls how much of a rotation 2.0f = full rotation
-		RotationInterpolator rotator1 = new RotationInterpolator(rotAlpha1, rotTG1, yAxis, 0.0f, (float) Math.PI * (2.0f));
-		rotator1.setSchedulingBounds(bounds);	
 		
-
-		
-		//*****Rotation2*********
-		TransformGroup rotTG2 = new TransformGroup();
-		rotTG2.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		Alpha rotAlpha2 = new Alpha(-1, 18000);
-		Transform3D yAxis2 = new Transform3D();
-		RotationInterpolator rotator2 = new RotationInterpolator(rotAlpha2, rotTG2, yAxis2,0.0f, (float) Math.PI * 4.0f);
-		rotator2.setSchedulingBounds(bounds);
-		
-
-		
-//		***Rotation3
-		TransformGroup rotTG3 = new TransformGroup();
-		rotTG3.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		Alpha rotAlpha3 = new Alpha(-1,18000);
-		Transform3D yAxis3 = new Transform3D();
-		RotationInterpolator rotator3 = new RotationInterpolator(rotAlpha3, rotTG3, yAxis3, 0.0f, (float) Math.PI*2.0f);
-		rotator3.setSchedulingBounds(bounds);
 
 		Rotation r0, r1, r2, r3, r4, r5 ,r6, r7, r8, r9;
 		r0 = new Rotation(bounds, true);
@@ -332,13 +310,15 @@ public class SolarSystem extends JFrame {
 		r5.getRotTG().addChild(r6.getRotTG());
 		r6.getRotTG().addChild(r7.getRotTG());
 		r7.getRotTG().addChild(r8.getRotTG());
-		
+//		Cylinder planetaryRing = new Cylinder(0.5f,0.5f);
 		r1.getRotTG().addChild(mercuryTG);
 		r2.getRotTG().addChild(venusTG);
 		r3.getRotTG().addChild(earthTG);
 		r4.getRotTG().addChild(marsTG);
 		r5.getRotTG().addChild(jupiterTG);
 		r6.getRotTG().addChild(saturnTG);
+		saturnTG.addChild(saturn.getPlanetaryRing());
+//		r6.getRotTG().addChild(ringTG);
 		r7.getRotTG().addChild(uranusTG);
 		r8.getRotTG().addChild(neptuneTG);
 			
