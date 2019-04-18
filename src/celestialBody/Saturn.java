@@ -13,7 +13,7 @@ import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.image.TextureLoader;
 
 public class Saturn extends CelestialBody{
-	static float defaultSize = .1f;
+	static float defaultSize = .4f;
 	static float defaultRed = 1f;
 	static float defaultGreen = 0f;
 	static float defaultBlue = 0f;

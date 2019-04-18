@@ -119,8 +119,7 @@ public class CelestialBody {
 		
 		Material material = new Material();
 		material.setShininess(0f);
-		
-		
+
 		ringApp.setMaterial(material);
 		
 		TexCoordGeneration tcg = new TexCoordGeneration(TexCoordGeneration.OBJECT_LINEAR,

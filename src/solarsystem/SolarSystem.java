@@ -5,6 +5,7 @@ package solarsystem;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import java.io.File;
+import java.util.Hashtable;
 
 import javax.media.j3d.Alpha;
 import javax.media.j3d.AmbientLight;
@@ -21,6 +22,7 @@ import javax.media.j3d.Material;
 import javax.media.j3d.PointLight;
 import javax.media.j3d.PolygonAttributes;
 import javax.media.j3d.RotationInterpolator;
+import javax.media.j3d.Shape3D;
 import javax.media.j3d.TexCoordGeneration;
 import javax.media.j3d.Texture;
 import javax.media.j3d.Texture2D;
@@ -28,6 +30,7 @@ import javax.media.j3d.Texture3D;
 import javax.media.j3d.TextureAttributes;
 import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
+import javax.media.j3d.View;
 import javax.swing.JFrame;
 import javax.vecmath.Color3f;
 import javax.vecmath.Matrix4d;
@@ -37,9 +40,13 @@ import javax.vecmath.Vector3d;
 import javax.vecmath.Vector3f;
 
 import com.jogamp.opengl.util.texture.TextureCoords;
+import com.sun.j3d.loaders.Scene;
+import com.sun.j3d.loaders.objectfile.ObjectFile;
 import com.sun.j3d.utils.behaviors.mouse.MouseRotate;
 import com.sun.j3d.utils.behaviors.mouse.MouseTranslate;
+import com.sun.j3d.utils.behaviors.mouse.MouseWheelZoom;
 import com.sun.j3d.utils.behaviors.mouse.MouseZoom;
+import com.sun.j3d.utils.behaviors.vp.OrbitBehavior;
 import com.sun.j3d.utils.geometry.Box;
 import com.sun.j3d.utils.geometry.ColorCube;
 import com.sun.j3d.utils.geometry.Cone;
@@ -77,11 +84,21 @@ public class SolarSystem extends JFrame {
 //		SimpleUniverse universe = new SimpleUniverse(canvas);
 //		universe.getViewingPlatform().setNominalViewingTransform();
 //		universe.addBranchGraph(scene);
+		
+		
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myCanvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 		getContentPane().add("Center", myCanvas3D);
 		SimpleUniverse simpUniv = new SimpleUniverse(myCanvas3D);
 		simpUniv.getViewingPlatform().setNominalViewingTransform();
+		
+		OrbitBehavior orbit = new OrbitBehavior(myCanvas3D);
+		orbit.setSchedulingBounds(new BoundingSphere(new Point3d(0.0,0.0,0.0), Double.MAX_VALUE));
+		orbit.setReverseTranslate(true);
+//		orbit.setZoomFactor(arg0);
+		simpUniv.getViewingPlatform().setViewPlatformBehavior(orbit);
+	
 		//viewing platform
 		TransformGroup cameraTG = simpUniv.getViewingPlatform().getViewPlatformTransform();
 		
@@ -90,6 +107,7 @@ public class SolarSystem extends JFrame {
 		Transform3D T3D = new Transform3D();
 		//move along z axis by 25.0f ("move away from the screen")
 		translate.set(-0.5f, 0.3f, 10f);
+
 //		translate.angle(new Vector3f(45.0f, 30.0f,30.0f));
 		
 //		Transform3D t = new Transform3D();
@@ -107,7 +125,7 @@ public class SolarSystem extends JFrame {
 		//Add scene to Universe
 		BranchGroup scene = createSceneGraph();
 		simpUniv.addBranchGraph(scene);
-		
+		addLight(simpUniv);
 		
 //		addSideLightLeft(simpUniv);
 		setTitle("Step 1: A simple cube");
@@ -115,6 +133,18 @@ public class SolarSystem extends JFrame {
 		setVisible(true);
 	}
 
+	public void addLight (SimpleUniverse su) {
+		BranchGroup amLightGroup = new BranchGroup();
+		BoundingSphere bounds = new BoundingSphere(new Point3d(0,0,0),100);
+		Color3f lightC = new Color3f(1,1,1);
+		Vector3f dir = new Vector3f(-1f,0f,-.5f);
+		AmbientLight amLight = new AmbientLight(lightC);
+		
+		amLight.setInfluencingBounds(bounds);
+		amLightGroup.addChild(amLight);
+//		
+		su.addBranchGraph(amLightGroup);
+	} 
 
 	
 	/**
@@ -128,8 +158,8 @@ public class SolarSystem extends JFrame {
 		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
 		//*****Light2
 				//light works only within set bounds	
-		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
-		Vector3f direction2 = new Vector3f(1.0f,-1.0f,0.5f);
+		Color3f lightColor = new Color3f(0.6f,0.6f,0.6f);
+		Vector3f direction2 = new Vector3f(-10f,-0.5f,-1f);
 //		Vector3f direction2 = new Vector3f(0.0f,0.0f,0.0f); // light comes side on
 		DirectionalLight light2 = new DirectionalLight(lightColor,direction2);
 		//***Light 2 End
@@ -144,16 +174,18 @@ public class SolarSystem extends JFrame {
 	 * Instead of the sun ilumminating the scene,
 	 * an ethereal light from the galaxy lights the scene fomr the right.
 	 */
-	public void addSideLightRight() {
+	public void addSideLightRight(SimpleUniverse su) {
 		BranchGroup bgLight = new BranchGroup();
 		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
 //		//directionaLight
-		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
+		Color3f lightColor = new Color3f(0.6f,0.6f,0.6f);
 		Vector3f direction = new Vector3f(-1.0f,0.0f,-0.5f);
 		DirectionalLight light = new DirectionalLight(lightColor,direction);
 		
 		light.setInfluencingBounds(bounds);
 		bgLight.addChild(light);
+		
+		su.addBranchGraph(bgLight);
 
 	}
 	
@@ -204,16 +236,74 @@ public class SolarSystem extends JFrame {
 		Neptune neptune = new Neptune(true);
 		
 		
+		ObjectFile fileLoader = new ObjectFile(ObjectFile.RESIZE);
+		Scene shipScene = null;
+		File file = new File ("src/textures/SpaceShip.obj");
+//		file.setBasePath("src/textures");
+		try {
+			shipScene = fileLoader.load(file.toURI().toURL());
+			
+		}
+		catch (Exception e) {
+			System.out.println("Object failed to load not goood"+e);
+		}
 		
+		
+		
+//		
+//		System.out.println("hELLO 1");
+//		Hashtable objects = shipScene.getNamedObjects();//only works for multi layer objects
+//		System.out.println("hELLO 2");
+//		
+//		
+//		
+//		
+//		Shape3D obj = null;
+//		Shape3D ship = null;
+//		Appearance appShip = new Appearance();
+//		ColoringAttributes attr = new ColoringAttributes();
+//		attr.setColor(new Color3f(1,1,1));
+//		appShip.setColoringAttributes(attr);
+//		try {
+//		 ship= (Shape3D) objects.get("SpaceShip");
+////		 ship= (Shape3D) shipScene.getNamedObjects();
+////		 ship = (Shape3D) obj.cloneTree();
+//		}
+//		catch (NullPointerException e) {
+//			System.out.println("not very goo" + e);
+//		}
+//		
+////		ship = shipScene.getSceneGroup();
+//		
+//		System.out.println("hELLO 3");
+//		
 		//TransformGroup
 		
 		//transform group for the branch group
+		Transform3D shipT = new Transform3D();
+		TransformGroup shipTG = createTG(1,1,1, 2,2,2, shipT);
+//		ship.setAppearance(appShip);
+		shipTG.addChild(shipScene.getSceneGroup());
+		BranchGroup amLightGroup = new BranchGroup();
+//		BoundingSphere bounds = new BoundingSphere(new Point3d(0,0,0),100);
+		Color3f lightC = new Color3f(1,1,1);
+		Vector3f dir = new Vector3f(-1f,0f,-.5f);
+		AmbientLight amLight = new AmbientLight(lightC);
+		
+		amLight.setInfluencingBounds(bounds);
+		amLightGroup.addChild(amLight);
+		shipTG.addChild(amLightGroup);
+//		shipTG.addChild(shipScene.getSceneGroup());
+		shipTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+		
+		
 		Transform3D sunT = new Transform3D();
 		TransformGroup sunTG = createTG(0.0,0.0,0, 0.1,0.1,0.1, sunT);
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		sunTG.setCapability(TransformGroup.ALLOW_TRANSFORM_READ);
+		
 		Transform3D mercuryT = new Transform3D();
-		TransformGroup mercuryTG = createTG(0.0,0.0,-1, 2.0,2.0,2.0,mercuryT);
+		TransformGroup mercuryTG = createTG(0.0,0.0,-1.5, 2.0,2.0,2.0,mercuryT);
 		mercuryTG.addChild(mercury.getCelestialBody());
 		mercuryTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
@@ -273,7 +363,7 @@ public class SolarSystem extends JFrame {
 		//***Spaceship end***
 		
 
-		Rotation r0, r1, r2, r3, r4, r5 ,r6, r7, r8, r9;
+		Rotation r0, r1, r2, r3, r4, r5 ,r6, r7, r8, r9, rShip;
 		r0 = new Rotation(bounds, true);
 		r1 = new Rotation(bounds, false);
 		r2 = new Rotation(bounds, false);
@@ -284,21 +374,18 @@ public class SolarSystem extends JFrame {
 		r7 = new Rotation(bounds, false);
 		r8 = new Rotation(bounds, false);
 		r9 = new Rotation(bounds, false);
+		rShip = new Rotation(bounds, false);
+		
 
 		//Creating cyclic rings
 		Cylinder c1, c1b, c2, c2b, c3, c3b, c4, c4b, c5,c5b ,c6, c6b, c7, c7b, c8, c8b ,c9, c9b;
 		
 
-		BranchGroup stars = new BranchGroup();
-		//Star star = new Start();
-		for (int i = 0; i < 100 ; i++ ) {
-			//Star star = new Star();
-//			stars.addChild(star);
-		}
+	
 //		c1 = new Cylinder(0.8,0.1,);
 //		mercuryBG.addChildAll(mercury.getCelestialBody(),ro);
 		//make edge relations with the scene graph nodes
-		//cube 1 translated -5 along z axis
+		//
 		objRoot.addChild(r0.getRotTG());
 		r0.getRotTG().addChild(sunTG);
 		sunTG.addChild(r1.getRotTG());
@@ -323,27 +410,42 @@ public class SolarSystem extends JFrame {
 		r8.getRotTG().addChild(neptuneTG);
 			
 		sunTG.addChild(sun.getCelestialBody());
+		sunTG.addChild(rShip.getRotTG());
+		
+		try {
+		rShip.getRotTG().addChild(shipTG);
+		}
+		catch (Exception e) {
+			System.out.println("shpace ship problem "+e);
+		}
 		
 		
-		//Create rotation behaviour
-		MouseRotate behaviourRot = new MouseRotate();
-		behaviourRot.setTransformGroup(r0.getRotTG());
-		objRoot.addChild(behaviourRot);
-		behaviourRot.setSchedulingBounds(bounds);
-		
-		//MouseRotate behaviour node
-		MouseZoom behaviourZoom = new MouseZoom();
-		behaviourZoom.setTransformGroup(r0.getRotTG());
-		behaviourZoom.setFactor(0.01);//0.01 makes mouse translation smooth as curren universe scale.
-		objRoot.addChild(behaviourZoom);
-		behaviourZoom.setSchedulingBounds(bounds);
-		
-		//Translate Behaviour
-		MouseTranslate behaviourTrans = new MouseTranslate();
-		behaviourTrans.setTransformGroup(r0.getRotTG());
-		behaviourTrans.setFactor(0.006);//0.006 makes mouse translation smooth at such as current universe scale.
-		objRoot.addChild(behaviourTrans);
-		behaviourTrans.setSchedulingBounds(bounds);
+//		//Create rotation behaviour
+//		MouseRotate behaviourRot = new MouseRotate();
+//		behaviourRot.setTransformGroup(r0.getRotTG());
+//		objRoot.addChild(behaviourRot);
+//		behaviourRot.setSchedulingBounds(bounds);
+//		
+//		//MouseRotate behaviour node
+//		MouseZoom behaviourZoom = new MouseZoom();
+//		behaviourZoom.setTransformGroup(r0.getRotTG());
+//		behaviourZoom.setFactor(0.01);//0.01 makes mouse translation smooth as curren universe scale.
+//		objRoot.addChild(behaviourZoom);
+//		behaviourZoom.setSchedulingBounds(bounds);
+//		
+//		
+//		MouseWheelZoom wheelZoom = new MouseWheelZoom();
+//		wheelZoom.setTransformGroup(r0.getRotTG());
+//		wheelZoom.setFactor(0.1);
+//		wheelZoom.setEnable(true);
+//		objRoot.addChild(wheelZoom);
+//		behaviourZoom.setSchedulingBounds(bounds);
+//		//Translate Behaviour
+//		MouseTranslate behaviourTrans = new MouseTranslate();
+//		behaviourTrans.setTransformGroup(r0.getRotTG());
+//		behaviourTrans.setFactor(0.006);//0.006 makes mouse translation smooth at such as current universe scale.
+//		objRoot.addChild(behaviourTrans);
+//		behaviourTrans.setSchedulingBounds(bounds);
 		
 		objRoot.compile();
 		return objRoot;
