@@ -49,12 +49,14 @@ public class Rotation {
 	 * @param minAngle - tends to control whether is spirals at an angle
 	 * @param maxAngle - tends to control how far it rotates in one cycle
 	 */
-	public Rotation (BoundingSphere bounds,int rotAplha, float minAngle, float maxAngle, boolean tilt) {
+	public Rotation (BoundingSphere bounds,int rotAplha, float minAngle, float maxAngle, double rotY, boolean tilt) {
 		rotTG = new TransformGroup();
 		rotAlpha = new Alpha(-1,rotAplha);
 		yAxis = new Transform3D();
+		yAxis.rotY(rotY);
 		rotator = new RotationInterpolator(rotAlpha, rotTG, yAxis, minAngle, (float) Math.PI*maxAngle);
 		rotator.setSchedulingBounds(bounds);
+		
 		this.bounds = bounds;
         
 		if (tilt) {
@@ -105,13 +107,22 @@ public class Rotation {
 		rotTG.addChild(rotator);
 	}
 	
+	/**
+	 * Sets transfrom t scale to default values.
+	 */
 	public void setScale() {
 		t.setScale(new Vector3d(2.0,2.0,2.0));
 		
 	}
 	
+	/**
+	 * Set transform t to speciffies values.
+	 * @param s1
+	 * @param s2
+	 * @param s3
+	 */
 	public void setScale(double s1, double s2, double s3) {
-		t.setScale(new Vector3d(2.0,2.0,2.0));
+		t.setScale(new Vector3d(s1,s2,s3));
 	}
 	
 	public void setTranslation() {
@@ -119,7 +130,7 @@ public class Rotation {
 	}
 	
 	public void setTranslation(double d1, double d2, double d3) {
-		t.setTranslation(new Vector3d(0.0,0.0,-5));
+		t.setTranslation(new Vector3d(d1,d2,d3));
 	}
 
 	public TransformGroup getRotTG() {
@@ -159,11 +170,11 @@ public class Rotation {
 
 	public void setyAxis(Transform3D yAxis) {
 		this.yAxis = yAxis;
-		rotator = new RotationInterpolator(rotAlpha, rotTG, yAxis, 0.0f, (float) Math.PI*2.0f);
-		rotator.setSchedulingBounds(bounds);
-		rotTG = new TransformGroup(t);
-		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
-		rotTG.addChild(rotator);
+//		rotator = new RotationInterpolator(rotAlpha, rotTG, yAxis, 0.0f, (float) Math.PI*2.0f);
+//		rotator.setSchedulingBounds(bounds);
+//		rotTG = new TransformGroup(t);
+//		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
+//		rotTG.addChild(rotator);
 	}
 
 
@@ -180,6 +191,7 @@ public class Rotation {
 		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		rotTG.addChild(rotator);
 	}
+	
 	
 	
 

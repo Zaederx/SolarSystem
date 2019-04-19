@@ -94,7 +94,7 @@ public class SolarSystem extends JFrame {
 		Vector3f translate = new Vector3f();
 		Transform3D T3D = new Transform3D();
 		//move along z axis by 25.0f ("move away from the screen")
-		translate.set(-0.5f, 0.3f, 10f);
+		translate.set(-0.5f, 0.3f, 15f);
 
 //		translate.angle(new Vector3f(45.0f, 30.0f,30.0f));
 		
@@ -279,20 +279,20 @@ public class SolarSystem extends JFrame {
 		earthTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D marsT = new Transform3D();
-		TransformGroup marsTG = createTG(0.0,0.0,-8, 2.0,2.0,2.0,marsT);
+		TransformGroup marsTG = createTG(0.0,0.0,-9, 2.0,2.0,2.0,marsT);
 		marsTG.addChild(mars.getCelestialBody());
 		marsTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		
 		Transform3D jupiterT = new Transform3D();
-		TransformGroup jupiterTG = createTG(0.0,0.0,-13, 2.0,2.0,2.0,jupiterT);
+		TransformGroup jupiterTG = createTG(0.0,0.0,-14, 2.0,2.0,2.0,jupiterT);
 		jupiterTG.addChild(jupiter.getCelestialBody());
 		jupiterTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D saturnT = new Transform3D();
 		Transform3D ringT = new Transform3D();
-		TransformGroup saturnTG = createTG(0.0,0.0,-14, 2.0,2.0,2.0,saturnT);
-		TransformGroup ringTG = createTG(0.0,0.0,-14, 0.1,0.1,0.1,ringT);
+		TransformGroup saturnTG = createTG(0.0,0.0,-20, 2.0,2.0,2.0,saturnT);
+		TransformGroup ringTG = createTG(0.0,0.0,-20, 0.1,0.1,0.1,ringT);
 		
 //		Cylinder planetaryRing =  new Cylinder(.1f,0.000000000000000000000000000000000001f);
 		saturnTG.addChild(saturn.getCelestialBody());
@@ -301,13 +301,13 @@ public class SolarSystem extends JFrame {
 		saturnTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D uranusT = new Transform3D();
-		TransformGroup uranusTG = createTG(0.0,0.0,-16, 2.0,2.0,2.0,uranusT);
+		TransformGroup uranusTG = createTG(0.0,0.0,-27, 2.0,2.0,2.0,uranusT);
 		uranusTG.addChild(uranus.getCelestialBody());
 		uranusTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		
 		Transform3D neptuneT = new Transform3D();
-		TransformGroup neptuneTG = createTG(0.0,0.0,-18, 2.0,2.0,2.0,neptuneT);
+		TransformGroup neptuneTG = createTG(0.0,0.0,-30, 2.0,2.0,2.0,neptuneT);
 		neptuneTG.addChild(neptune.getCelestialBody());
 		neptuneTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
@@ -325,17 +325,50 @@ public class SolarSystem extends JFrame {
 		
 
 		Rotation r0, r1, r2, r3, r4, r5 ,r6, r7, r8, r9, rShip;
+		
+//		
+//		r1 = new Rotation(bounds, 12000, (float)Math.PI*0.0f, (float)Math.PI*2.00f,false);
+//		r2 = new Rotation(bounds, 13000, (float)Math.PI*0f*.40f, (float)Math.PI*2f*.400f,false);
+//		r3 = new Rotation(bounds, 14000, (float)Math.PI*0f*.80f, (float)Math.PI*2f*.800f,false);
+//		r4 = new Rotation(bounds, 15000, (float)Math.PI*1f*.20f, (float)Math.PI*3f*.200f,false);
+//		r5 = new Rotation(bounds, 16000, (float)Math.PI*1f*.60f, (float)Math.PI*3f*.600f,false);
+//		r6 = new Rotation(bounds, 17000, (float)Math.PI*2f*.00f, (float)Math.PI*4f*.000f,false);
+//		r7 = new Rotation(bounds, 18000,(float)Math.PI* 2f*.30f, (float)Math.PI*4f*.300f,false);
+//		r8 = new Rotation(bounds, 19000, (float)Math.PI*2f*.80f, (float)Math.PI*4f*.800f,false);
+//		r9 = new Rotation(bounds, 20000, (float)Math.PI*3f*.00f, (float)Math.PI*5f*.00f,false);
+//		rShip = new Rotation(bounds, 1800, 0.0f,-2f,false);
 		r0 = new Rotation(bounds, true);
-		r1 = new Rotation(bounds, 12000, 0.0f, 2f,false);
-		r2 = new Rotation(bounds, 13000, 0.4f, 2.4f,false);
-		r3 = new Rotation(bounds, 14000, 0.8f, 2.8f,false);
-		r4 = new Rotation(bounds, 15000, 1.2f, 3.2f,false);
-		r5 = new Rotation(bounds, 16000, 1.6f, 3.6f,false);
-		r6 = new Rotation(bounds, 17000, 2.0f, 4.0f,false);
-		r7 = new Rotation(bounds, 18000, 2.3f, 4.3f,false);
-		r8 = new Rotation(bounds, 19000, 2.8f, 4.8f,false);
-		r9 = new Rotation(bounds, 20000, 3.0f, 5.0f,false);
-		rShip = new Rotation(bounds, 1800, 0.0f,-2f,false);
+		r1 = new Rotation(bounds, 9000, 0f, 2f, Math.PI,false);
+		r2 = new Rotation(bounds, 10000, 0f, 2f, Math.PI/4,false);
+		r3 = new Rotation(bounds, 20000, 0f, 2f, Math.PI*2,false);
+		r4 = new Rotation(bounds, 25000, 0f, 2f, Math.PI/8,false);
+		r5 = new Rotation(bounds, 30005, 0f, 2f, Math.PI*3,false);
+		r6 = new Rotation(bounds, 90000, 0f, 2f, Math.PI/6 ,false);
+		r7 = new Rotation(bounds, 100099, 0f, 2f,Math.PI,false);
+		r8 = new Rotation(bounds, 200000, 0f, 2f,Math.PI/12,false);
+//		r9 = new Rotation(bounds, 20000, (float)Math.PI*0f+0.4f, (float)Math.PI*2f+0.4f,false);
+		rShip = new Rotation(bounds, 1800,0.0f,-2f, 0.0, false);
+		
+		r1.getyAxis().rotY(Math.PI);
+		r2.getyAxis().rotY(Math.PI/4);
+		r3.getyAxis().rotY(Math.PI*2);
+		r4.getyAxis().rotY(Math.PI/8);
+		r5.getyAxis().rotY(Math.PI/6);
+		r6.getyAxis().rotY(Math.PI*3);
+		r7.getyAxis().rotY(Math.PI/12);
+		r8.getyAxis().rotY(Math.PI);
+	
+		
+//		r1 = new Rotation(bounds, 12000, (float)Math.PI*0.0f, (float)Math.PI*2.00f,false);
+//		r2 = new Rotation(bounds, 13000, (float)Math.PI*0f*.40f, (float)Math.PI*2f*.400f,false);
+//		r3 = new Rotation(bounds, 14000, (float)Math.PI*0f*.80f, (float)Math.PI*2f*.800f,false);
+//		r4 = new Rotation(bounds, 15000, (float)Math.PI*1f*.20f, (float)Math.PI*3f*.200f,false);
+//		r5 = new Rotation(bounds, 16000, (float)Math.PI*1f*.60f, (float)Math.PI*3f*.600f,false);
+//		r6 = new Rotation(bounds, 17000, (float)Math.PI*2f*.00f, (float)Math.PI*4f*.000f,false);
+//		r7 = new Rotation(bounds, 18000,(float)Math.PI* 2f*.30f, (float)Math.PI*4f*.300f,false);
+//		r8 = new Rotation(bounds, 19000, (float)Math.PI*2f*.80f, (float)Math.PI*4f*.800f,false);
+//		r9 = new Rotation(bounds, 20000, (float)Math.PI*3f*.00f, (float)Math.PI*5f*.00f,false);
+//		rShip = new Rotation(bounds, 1800, 0.0f,-2f,false);
 		
 
 		//Creating cyclic rings
@@ -350,15 +383,26 @@ public class SolarSystem extends JFrame {
 		objRoot.addChild(r0.getRotTG());
 		r0.getRotTG().addChild(sunTG);
 		sunTG.addChild(r1.getRotTG());
+		sunTG.addChild(r2.getRotTG());
+		sunTG.addChild(r3.getRotTG());
+		sunTG.addChild(r4.getRotTG());
+		sunTG.addChild(r5.getRotTG());
+		sunTG.addChild(r6.getRotTG());
+		sunTG.addChild(r7.getRotTG());
+		sunTG.addChild(r8.getRotTG());
+//		sunTG.addChild(r9.getRotTG());
+		sunTG.addChild(rShip.getRotTG());
+		
+//		sunTG.addChild(r1.getRotTG());
 		sunTG.addChild(skyBranch);
-		r1.getRotTG().addChild(r2.getRotTG());
-		r2.getRotTG().addChild(r3.getRotTG());
-		r3.getRotTG().addChild(r4.getRotTG());
-		r4.getRotTG().addChild(r5.getRotTG());
-		r5.getRotTG().addChild(r6.getRotTG());
-		r6.getRotTG().addChild(r7.getRotTG());
-		r7.getRotTG().addChild(r8.getRotTG());
-//		Cylinder planetaryRing = new Cylinder(0.5f,0.5f);
+//		r1.getRotTG().addChild(r2.getRotTG());
+//		r2.getRotTG().addChild(r3.getRotTG());
+//		r3.getRotTG().addChild(r4.getRotTG());
+//		r4.getRotTG().addChild(r5.getRotTG());
+//		r5.getRotTG().addChild(r6.getRotTG());
+//		r6.getRotTG().addChild(r7.getRotTG());
+//		r7.getRotTG().addChild(r8.getRotTG());
+////		Cylinder planetaryRing = new Cylinder(0.5f,0.5f);
 		r1.getRotTG().addChild(mercuryTG);
 		r2.getRotTG().addChild(venusTG);
 		r3.getRotTG().addChild(earthTG);
@@ -369,9 +413,9 @@ public class SolarSystem extends JFrame {
 //		r6.getRotTG().addChild(ringTG);
 		r7.getRotTG().addChild(uranusTG);
 		r8.getRotTG().addChild(neptuneTG);
-			
+//			
 		sunTG.addChild(sun.getCelestialBody());
-		sunTG.addChild(rShip.getRotTG());
+//		sunTG.addChild(rShip.getRotTG());
 		
 		try {
 		rShip.getRotTG().addChild(shipTG);
