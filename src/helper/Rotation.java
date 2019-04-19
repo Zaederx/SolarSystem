@@ -45,21 +45,21 @@ public class Rotation {
 	/**
 	 * Consturctor for more customer settings
 	 * @param bounds - bounds of the rotation
+	 * @param rotAplha - how long to rotate around the set angle
 	 * @param minAngle - tends to control whether is spirals at an angle
 	 * @param maxAngle - tends to control how far it rotates in one cycle
 	 */
-	public Rotation (BoundingSphere bounds, float minAngle, float maxAngle, boolean tilt) {
-		
-		rotAlpha = new Alpha(-1,18000);
+	public Rotation (BoundingSphere bounds,int rotAplha, float minAngle, float maxAngle, boolean tilt) {
+		rotTG = new TransformGroup();
+		rotAlpha = new Alpha(-1,rotAplha);
 		yAxis = new Transform3D();
 		rotator = new RotationInterpolator(rotAlpha, rotTG, yAxis, minAngle, (float) Math.PI*maxAngle);
 		rotator.setSchedulingBounds(bounds);
 		this.bounds = bounds;
-
+        
 		if (tilt) {
 			tilt();
 		} else {
-		rotTG = new TransformGroup(t);
 		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		rotTG.addChild(rotator);
 		}

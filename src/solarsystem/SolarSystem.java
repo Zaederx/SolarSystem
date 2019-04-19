@@ -281,7 +281,7 @@ public class SolarSystem extends JFrame {
 		
 		//transform group for the branch group
 		Transform3D shipT = new Transform3D();
-		TransformGroup shipTG = createTG(1,1,1, 2,2,2, shipT);
+		TransformGroup shipTG = createTG(2,2,2, 0.6,0.6,0.6, shipT);
 //		ship.setAppearance(appShip);
 		shipTG.addChild(shipScene.getSceneGroup());
 		BranchGroup amLightGroup = new BranchGroup();
@@ -374,7 +374,7 @@ public class SolarSystem extends JFrame {
 		r7 = new Rotation(bounds, false);
 		r8 = new Rotation(bounds, false);
 		r9 = new Rotation(bounds, false);
-		rShip = new Rotation(bounds, false);
+		rShip = new Rotation(bounds, 1800, 0.0f,-2f,false);
 		
 
 		//Creating cyclic rings
@@ -416,8 +416,9 @@ public class SolarSystem extends JFrame {
 		rShip.getRotTG().addChild(shipTG);
 		}
 		catch (Exception e) {
-			System.out.println("shpace ship problem "+e);
+			System.out.println("space ship problem "+e);
 		}
+//		rShip.
 		
 		
 //		//Create rotation behaviour
