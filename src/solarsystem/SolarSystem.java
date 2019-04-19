@@ -74,19 +74,7 @@ public class SolarSystem extends JFrame {
 	 * Set's up a solar system on the canvas.
 	 */
 	public SolarSystem () {
-//		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//		Container container = getContentPane();
-//		BorderLayout bL = new BorderLayout();
-//		container.setLayout(bL);
-//		Canvas3D canvas = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
-//		container.add("Center",canvas);
-//		BranchGroup scene = createSceneGraph();
-//		SimpleUniverse universe = new SimpleUniverse(canvas);
-//		universe.getViewingPlatform().setNominalViewingTransform();
-//		universe.addBranchGraph(scene);
-		
-		
-		
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myCanvas3D = new Canvas3D(SimpleUniverse.getPreferredConfiguration());
 		getContentPane().add("Center", myCanvas3D);
@@ -119,13 +107,10 @@ public class SolarSystem extends JFrame {
 		//add translate transform to cameraTG
 		cameraTG.setTransform(T3D);
 		
-		
-
-		
 		//Add scene to Universe
 		BranchGroup scene = createSceneGraph();
 		simpUniv.addBranchGraph(scene);
-		addLight(simpUniv);
+//		addLight(simpUniv);
 		
 //		addSideLightLeft(simpUniv);
 		setTitle("Step 1: A simple cube");
@@ -250,33 +235,9 @@ public class SolarSystem extends JFrame {
 		
 		
 		
-//		
-//		System.out.println("hELLO 1");
-//		Hashtable objects = shipScene.getNamedObjects();//only works for multi layer objects
-//		System.out.println("hELLO 2");
-//		
-//		
-//		
-//		
-//		Shape3D obj = null;
-//		Shape3D ship = null;
-//		Appearance appShip = new Appearance();
-//		ColoringAttributes attr = new ColoringAttributes();
-//		attr.setColor(new Color3f(1,1,1));
-//		appShip.setColoringAttributes(attr);
-//		try {
-//		 ship= (Shape3D) objects.get("SpaceShip");
-////		 ship= (Shape3D) shipScene.getNamedObjects();
-////		 ship = (Shape3D) obj.cloneTree();
-//		}
-//		catch (NullPointerException e) {
-//			System.out.println("not very goo" + e);
-//		}
-//		
-////		ship = shipScene.getSceneGroup();
-//		
-//		System.out.println("hELLO 3");
-//		
+
+
+	
 		//TransformGroup
 		
 		//transform group for the branch group
@@ -365,15 +326,15 @@ public class SolarSystem extends JFrame {
 
 		Rotation r0, r1, r2, r3, r4, r5 ,r6, r7, r8, r9, rShip;
 		r0 = new Rotation(bounds, true);
-		r1 = new Rotation(bounds, false);
-		r2 = new Rotation(bounds, false);
-		r3 = new Rotation(bounds, false);
-		r4 = new Rotation(bounds, false);
-		r5 = new Rotation(bounds, false);
-		r6 = new Rotation(bounds, false);
-		r7 = new Rotation(bounds, false);
-		r8 = new Rotation(bounds, false);
-		r9 = new Rotation(bounds, false);
+		r1 = new Rotation(bounds, 12000, 0.0f, 2f,false);
+		r2 = new Rotation(bounds, 13000, 0.4f, 2.4f,false);
+		r3 = new Rotation(bounds, 14000, 0.8f, 2.8f,false);
+		r4 = new Rotation(bounds, 15000, 1.2f, 3.2f,false);
+		r5 = new Rotation(bounds, 16000, 1.6f, 3.6f,false);
+		r6 = new Rotation(bounds, 17000, 2.0f, 4.0f,false);
+		r7 = new Rotation(bounds, 18000, 2.3f, 4.3f,false);
+		r8 = new Rotation(bounds, 19000, 2.8f, 4.8f,false);
+		r9 = new Rotation(bounds, 20000, 3.0f, 5.0f,false);
 		rShip = new Rotation(bounds, 1800, 0.0f,-2f,false);
 		
 
@@ -418,36 +379,6 @@ public class SolarSystem extends JFrame {
 		catch (Exception e) {
 			System.out.println("space ship problem "+e);
 		}
-//		rShip.
-		
-		
-//		//Create rotation behaviour
-//		MouseRotate behaviourRot = new MouseRotate();
-//		behaviourRot.setTransformGroup(r0.getRotTG());
-//		objRoot.addChild(behaviourRot);
-//		behaviourRot.setSchedulingBounds(bounds);
-//		
-//		//MouseRotate behaviour node
-//		MouseZoom behaviourZoom = new MouseZoom();
-//		behaviourZoom.setTransformGroup(r0.getRotTG());
-//		behaviourZoom.setFactor(0.01);//0.01 makes mouse translation smooth as curren universe scale.
-//		objRoot.addChild(behaviourZoom);
-//		behaviourZoom.setSchedulingBounds(bounds);
-//		
-//		
-//		MouseWheelZoom wheelZoom = new MouseWheelZoom();
-//		wheelZoom.setTransformGroup(r0.getRotTG());
-//		wheelZoom.setFactor(0.1);
-//		wheelZoom.setEnable(true);
-//		objRoot.addChild(wheelZoom);
-//		behaviourZoom.setSchedulingBounds(bounds);
-//		//Translate Behaviour
-//		MouseTranslate behaviourTrans = new MouseTranslate();
-//		behaviourTrans.setTransformGroup(r0.getRotTG());
-//		behaviourTrans.setFactor(0.006);//0.006 makes mouse translation smooth at such as current universe scale.
-//		objRoot.addChild(behaviourTrans);
-//		behaviourTrans.setSchedulingBounds(bounds);
-		
 		objRoot.compile();
 		return objRoot;
 	}
@@ -503,7 +434,7 @@ public class SolarSystem extends JFrame {
 
 	
 	/**
-	 * 
+	 * Main method.
 	 * @param args
 	 */
 	public static void main (String [] args) {

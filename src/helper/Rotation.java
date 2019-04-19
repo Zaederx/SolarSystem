@@ -76,7 +76,7 @@ public class Rotation {
 		Transform3D helperT3D3 = new Transform3D();
 		helperT3D3.rotZ(Math.PI/6);
 		t.mul(helperT3D3);
-		helperT3D3.rotX(Math.PI/4);//rotation about X tilts it forward or backward
+		helperT3D3.rotX(Math.PI/9);//rotation about X tilts it forward or backward
 		t.mul(helperT3D3);
 		rotTG = new TransformGroup(t);
 		rotTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
