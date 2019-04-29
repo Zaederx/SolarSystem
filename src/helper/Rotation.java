@@ -7,6 +7,11 @@ import javax.media.j3d.Transform3D;
 import javax.media.j3d.TransformGroup;
 import javax.vecmath.Vector3d;
 
+/**
+ * Class used to rotation transformations.
+ * @author zacharyishmael
+ *
+ */
 public class Rotation {
 	
 	TransformGroup rotTG;

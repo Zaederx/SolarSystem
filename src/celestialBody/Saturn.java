@@ -11,7 +11,11 @@ import javax.vecmath.Color3f;
 
 import com.sun.j3d.utils.geometry.Cylinder;
 import com.sun.j3d.utils.image.TextureLoader;
-
+/**
+ * Class extending from CelestialBody, used to create the Saturn 3D shape.
+ * @author zacharyishmael
+ *
+ */
 public class Saturn extends CelestialBody{
 	static float defaultSize = .4f;
 	static float defaultRed = 1f;
@@ -22,8 +26,11 @@ public class Saturn extends CelestialBody{
 	static String texImage = "src/textures/saturn.jpg";
 	//Create box and add the whiteApp
 
+	/**
+	 * Creates new Saturn object.
+	 * @param textured - whether you would like it to be textured.
+	 */
 	public Saturn (boolean textured) {
-		
 		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
 		appearance = new Appearance();
 		if (textured) {

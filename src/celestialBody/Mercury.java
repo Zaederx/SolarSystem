@@ -9,8 +9,7 @@ import javax.media.j3d.TextureAttributes;
 
 import com.sun.j3d.utils.image.TextureLoader;
 /**
- * Class used to creat Mecury for SoloarSystem model.
- * 
+ * Class extending from CelestialBody, used to create the Mercury 3D shape.
  * @author zacharyishmael
  *
  */
@@ -21,6 +20,10 @@ public class Mercury extends CelestialBody{
 		static float defaultBlue = 0f;
 		static String texImage = "src/textures/mercury.jpg";
 		
+		/**
+		 * Creates new Mercury object.
+		 * @param textured - whether you would like it to be textured.
+		 */
 		public Mercury (boolean textured) {
 			super(defaultSize,defaultRed, defaultGreen, defaultBlue);
 			if (textured) {

@@ -9,6 +9,11 @@ import javax.media.j3d.TextureAttributes;
 
 import com.sun.j3d.utils.image.TextureLoader;
 
+/**
+ * Class extending from CelestialBody, used to create the Neptune 3D shape.
+ * @author zacharyishmael
+ *
+ */
 public class Neptune extends CelestialBody {
 	
 	static float defaultSize = 0.35f;
@@ -16,6 +21,10 @@ public class Neptune extends CelestialBody {
 	static float defaultGreen = 0f;
 	static float defaultBlue = 0f;
 	static String texImage = "src/textures/neptune.jpg";
+	/**
+	 * Creates new Neptune object.
+	 * @param textured - whether you would like it to be textured.
+	 */
 	public Neptune (boolean textured) {
 		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
 		setTexture(texImage);

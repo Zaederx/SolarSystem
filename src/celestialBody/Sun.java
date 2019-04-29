@@ -19,7 +19,11 @@ import javax.vecmath.Point3f;
 import javax.vecmath.Vector3f;
 
 import com.sun.j3d.utils.image.TextureLoader;
-
+/**
+ * Class extending from CelestialBody, used to create the Sun 3D shape.
+ * @author zacharyishmael
+ *
+ */
 public class Sun extends CelestialBody{
 	private static float defaultSize = 1.0f;
 	private static float defaultRed = 0f;
@@ -28,7 +32,7 @@ public class Sun extends CelestialBody{
 	static String texImage = "src/textures/sun.jpg";
 	
 	/**
-	 * Consturctor for 
+	 * Constructor for Sun Class
 	 * @param bounds
 	 * @param emit
 	 */
@@ -50,7 +54,6 @@ public class Sun extends CelestialBody{
 	 */
 	public void emitLight (BoundingSphere bounds) {
 		BranchGroup sunLight = new BranchGroup();
-//		BoundingSphere bounds = new BoundingSphere(new Point3d(0.0,0.0,0.0),10000.0);
 		
 		//set up light in the scene
 		Color3f pointLColor = new Color3f(0.6f,0.6f,0.6f);
@@ -61,23 +64,6 @@ public class Sun extends CelestialBody{
 		pointLight.setInfluencingBounds(bounds);
 		pointLight.setBounds(bounds);
 		sunLight.addChild(pointLight);
-		
-		//directionaLight
-//		Color3f lightColor = new Color3f(1.0f,1.0f,1.0f);
-//		Vector3f direction = new Vector3f(-1.0f,0.0f,-0.5f);
-//		DirectionalLight light = new DirectionalLight(lightColor,direction);
-		
-//		//light works only within set bounds
-//		light.setInfluencingBounds(bounds);
-//		sunLight.addChild(light);
-//		
-//		Vector3f direction2 = new Vector3f(1.0f,-1.0f,0.5f);
-//		DirectionalLight light2 = new DirectionalLight(lightColor,direction2);
-//		light2.setInfluencingBounds(bounds);
-//		sunLight.addChild(light2);
-		
 		getCelestialBody().addChild(sunLight);
-		
-//		su.addBranchGraph(bgLight);
 	}
 }

@@ -8,7 +8,11 @@ import javax.media.j3d.Texture2D;
 import javax.media.j3d.TextureAttributes;
 
 import com.sun.j3d.utils.image.TextureLoader;
-
+/**
+ * Class extending from CelestialBody, used to create the Earth 3D shape.
+ * @author zacharyishmael
+ *
+ */
 public class Earth extends CelestialBody{
 
 	static float defaultSize = 0.3f;
@@ -17,6 +21,10 @@ public class Earth extends CelestialBody{
 	static float defaultBlue = 0f;
 	static String texImage = "src/textures/earth.jpg";
 
+	/**
+	 * Creates new Earth object.
+	 * @param textured - whether you would like it to be textured.
+	 */
 	public Earth (boolean textured) {
 		super(defaultSize);
 		if (textured) {

@@ -10,7 +10,7 @@ import javax.media.j3d.TextureAttributes;
 import com.sun.j3d.utils.image.TextureLoader;
 
 /**
- * Class for Venus object creation.
+ * Class extending from CelestialBody, used to create the Venus 3D shape.
  * @author zacharyishmael
  *
  */
@@ -20,6 +20,10 @@ public class Venus extends CelestialBody {
 	static float defaultGreen = 1f;
 	static float defaultBlue = 1f;
 	static String texImage = "src/textures/venus.jpg";
+	/**
+	 * Creates new Venus object.
+	 * @param textured - whether you would like it to be textured.
+	 */
 	public Venus (boolean textured) {
 		super(defaultSize,defaultRed, defaultGreen, defaultBlue);
 		if (textured) {
