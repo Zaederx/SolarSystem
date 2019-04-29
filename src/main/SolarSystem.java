@@ -103,24 +103,18 @@ public class SolarSystem extends JFrame {
 		//move along z axis by 25.0f ("move away from the screen")
 		translate.set(-0.5f, 0.3f, 15f);
 
-//		translate.angle(new Vector3f(45.0f, 30.0f,30.0f));
-		
-//		Transform3D t = new Transform3D();
+
 		T3D.setTranslation(translate);
-//		T3D.rotX(Math.PI);
-//		T3D.perspective(0.1, 20.0, 0.1, 10.0);
-//		t.mul(T3D);
-		
-		//add translate transform to cameraTG
+
 		cameraTG.setTransform(T3D);
 		
 		//Add scene to Universe
 		BranchGroup scene = createSceneGraph();
 		simpUniv.addBranchGraph(scene);
-//		addLight(simpUniv);
+		addLight(simpUniv);
 		
 //		addSideLightLeft(simpUniv);
-		setTitle("Step 1: A simple cube");
+		setTitle("Zach's  UNIVERSE!!!");
 		setSize(700,700);
 		setVisible(true);
 	}
@@ -140,8 +134,9 @@ public class SolarSystem extends JFrame {
 
 	
 	/**
-	 * Changes the direction of the light.
-	 * Instead of the sun ilumminating the scene,
+	 * Can be used to add directional light to scene.
+	 * (Tends to look better without this though :))
+	 * Instead of the sun illumminating the scene,
 	 * an ethereal light from the galaxy lights the scene from the left.
 	 * @param su
 	 */
@@ -162,7 +157,8 @@ public class SolarSystem extends JFrame {
 	}
 	
 	/**
-	 * Changes the direction of the light.
+	 * Can be used to add a directional light to the scene.
+	 * (Tends to look better without this though :))
 	 * Instead of the sun ilumminating the scene,
 	 * an ethereal light from the galaxy lights the scene fomr the right.
 	 */
