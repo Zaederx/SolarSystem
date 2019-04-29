@@ -5,4 +5,4 @@
  * @author zacharyishmael
  *
  */
-package solarsystem;
+package main;

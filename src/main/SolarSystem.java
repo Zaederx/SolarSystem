@@ -1,4 +1,4 @@
-package solarsystem;
+package main;
 
 
 
@@ -292,12 +292,12 @@ public class SolarSystem extends JFrame {
 		Transform3D saturnT = new Transform3D();
 		Transform3D ringT = new Transform3D();
 		TransformGroup saturnTG = createTG(0.0,0.0,-20, 2.0,2.0,2.0,saturnT);
-		TransformGroup ringTG = createTG(0.0,0.0,-20, 0.1,0.1,0.1,ringT);
+		TransformGroup ringTG = createTG(0.0,0.0,0, 4,4,3,ringT);
 		
 //		Cylinder planetaryRing =  new Cylinder(.1f,0.000000000000000000000000000000000001f);
 		saturnTG.addChild(saturn.getCelestialBody());
 //		ringTG.addChild(planetaryRing);
-//		ringTG.addChild(saturn.getPlanetaryRing());
+		ringTG.addChild(saturn.getPlanetaryRing());
 		saturnTG.setCapability(TransformGroup.ALLOW_TRANSFORM_WRITE);
 		
 		Transform3D uranusT = new Transform3D();
@@ -409,7 +409,7 @@ public class SolarSystem extends JFrame {
 		r4.getRotTG().addChild(marsTG);
 		r5.getRotTG().addChild(jupiterTG);
 		r6.getRotTG().addChild(saturnTG);
-		saturnTG.addChild(saturn.getPlanetaryRing());
+		saturnTG.addChild(ringTG);
 //		r6.getRotTG().addChild(ringTG);
 		r7.getRotTG().addChild(uranusTG);
 		r8.getRotTG().addChild(neptuneTG);

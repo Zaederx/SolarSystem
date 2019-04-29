@@ -25,7 +25,7 @@ public CyclicRing() {
 	ColoringAttributes whiteCA = new ColoringAttributes();
 	whiteCA.setColor(white);
 	whiteApp.setColoringAttributes(whiteCA);
-	ringEdge = new Cylinder(0.1f, 2.0f, whiteApp);
+	ringEdge = new Cylinder(0.4f, 4.0f, whiteApp);
 	blackApp = new Appearance();
 	Color3f black = new Color3f(1.0f,1.0f,1.0f);
 	ColoringAttributes blackCA = new ColoringAttributes();
