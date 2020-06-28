@@ -7,10 +7,10 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="j3dcore.jar"/>
-	<classpathentry kind="lib" path="j3dutils.jar"/>
-	<classpathentry kind="lib" path="jogamp-fat-test.jar"/>
-	<classpathentry kind="lib" path="jogamp-fat.jar"/>
-	<classpathentry kind="lib" path="vecmath.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/j3dcore.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/j3dutils.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/jogamp-fat-test.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/jogamp-fat.jar"/>
+	<classpathentry exported="true" kind="lib" path="jars/vecmath.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
